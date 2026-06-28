@@ -1,0 +1,3173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Primeira Igreja Presbiteriana em Queimados</title>
+<meta name="description" content="Primeira Igreja Presbiteriana em Queimados — uma comunidade de fé reformada. Cultos, hinário, Bíblia, eventos e contato." />
+
+<!-- PWA: permite instalar o site como app e habilita o funcionamento offline -->
+<link rel="manifest" href="./manifest.json" />
+<meta name="theme-color" content="#0b1f1a" />
+
+<!-- Ícones -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+<!-- Fontes: Fraunces para identidade/títulos, Inter para leitura e interface -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+  /* ============================================================
+     TOKENS — paleta, tipografia e medidas centrais do projeto
+     ============================================================ */
+  :root {
+    /* Cor — paleta aprofundada: verde quase-preto, dourado envelhecido */
+    --ink: #070f0d;             /* fundo principal, verde-petróleo quase-preto */
+    --ink-2: #0e1f1b;           /* fundo secundário, painéis no escuro */
+    --ink-3: #142a24;           /* camada mais alta — sidebar, cards elevados */
+    --paper: #f6f1e6;           /* fundo claro, tom pergaminho */
+    --paper-2: #fffcf6;         /* superfícies no claro */
+    --teal: #1c6b51;            /* verde principal da marca */
+    --teal-bright: #2f9c79;     /* verde de destaque, uso pontual — menos saturado que antes */
+    --gold: #a8863f;            /* dourado envelhecido, discreto */
+    --gold-bright: #c9a860;     /* dourado para hover/destaque pontual */
+    --line: rgba(245, 240, 225, 0.10);
+
+    /* Texto (tema escuro por padrão) */
+    --text-1: #f3f0e8;
+    --text-2: rgba(243, 240, 232, 0.70);
+    --text-3: rgba(243, 240, 232, 0.46);
+
+    /* Superfícies que mudam com o tema */
+    --bg: var(--ink);
+    --bg-panel: var(--ink-2);
+    --bg-card: rgba(255, 255, 255, 0.035);
+    --bg-card-hover: rgba(255, 255, 255, 0.065);
+    --border: var(--line);
+    --modal-bg: #0e211c;
+
+    /* Tipografia */
+    --font-display: "Fraunces", Georgia, serif;
+    --font-body: "Inter", Arial, Helvetica, sans-serif;
+    --reader-size: 17px;
+
+    /* Forma — mais discreta, ar editorial em vez de "app arredondado" */
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 9px;
+    --shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  }
+
+  body.theme-light {
+    --bg: var(--paper);
+    --bg-panel: var(--paper-2);
+    --bg-card: rgba(28, 107, 81, 0.05);
+    --bg-card-hover: rgba(28, 107, 81, 0.10);
+    --border: rgba(28, 107, 81, 0.15);
+    --modal-bg: #fffcf6;
+    --text-1: #15241e;
+    --text-2: rgba(21, 36, 30, 0.72);
+    --text-3: rgba(21, 36, 30, 0.5);
+  }
+
+  /* ============================================================
+     BASE
+     ============================================================ */
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font-body);
+    color: var(--text-1);
+    background: var(--bg);
+    transition: background 0.35s ease, color 0.35s ease;
+    overflow-x: hidden;
+  }
+
+  img { max-width: 100%; display: block; }
+
+  button { font-family: inherit; }
+
+  a { color: inherit; text-decoration: none; }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  /* ============================================================
+     BARRA SUPERIOR
+     ============================================================ */
+  .topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px clamp(16px, 4vw, 40px);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  .brand .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+
+  .brand .brand-text strong {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+
+  .brand .brand-text small {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--text-3);
+    white-space: nowrap;
+  }
+
+  .brand .mark {
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+
+  .brand .mark svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  /* ============================================================
+     SIDEBAR — painel de navegação deslizante, substitui as abas.
+     Desliza da direita; item ativo marcado por um fio dourado à
+     esquerda, como uma fita marcadora de página de hinário.
+     ============================================================ */
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 5, 0.6);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 90;
+  }
+  .sidebar-overlay.open { opacity: 1; pointer-events: auto; }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(320px, 86vw);
+    background: var(--ink-3);
+    border-left: 1px solid var(--border);
+    box-shadow: -30px 0 60px rgba(0, 0, 0, 0.4);
+    z-index: 95;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .sidebar.open { transform: translateX(0); }
+
+  .sidebar-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 22px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-head .sidebar-mark svg { width: 30px; height: 30px; }
+  .sidebar-head div { flex: 1; min-width: 0; }
+  .sidebar-head strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    color: var(--text-1);
+  }
+  .sidebar-head small {
+    display: block;
+    font-size: 11px;
+    color: var(--text-3);
+    line-height: 1.3;
+    margin-top: 2px;
+  }
+  .sidebar-close { flex-shrink: 0; }
+
+  .sidebar-list {
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+  }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--text-2);
+    padding: 14px 22px;
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-align: left;
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: 0.15s ease;
+  }
+  .sidebar-item i { width: 18px; text-align: center; color: var(--text-3); font-size: 14px; flex-shrink: 0; }
+  .sidebar-item:hover { background: var(--bg-card-hover); color: var(--text-1); }
+  .sidebar-item.active {
+    color: var(--text-1);
+    background: linear-gradient(90deg, rgba(168, 134, 63, 0.12), transparent);
+    border-left-color: var(--gold);
+  }
+  .sidebar-item.active i { color: var(--gold-bright); }
+
+  body.sidebar-locked { overflow: hidden; }
+
+  .icon-btn {
+    width: 40px; height: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-1);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: 0.2s ease;
+  }
+  .icon-btn:hover { background: var(--bg-card-hover); }
+
+  .topbar-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+  .icon-btn.is-admin {
+    color: #06150f;
+    background: linear-gradient(135deg, var(--gold), #e7c768);
+    border-color: transparent;
+  }
+
+  /* ============================================================
+     LAYOUT GERAL
+     ============================================================ */
+  .main {
+    padding: 96px clamp(16px, 5vw, 56px) 64px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+
+  .view { display: none; animation: rise 0.4s ease; }
+  .view.active { display: block; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    margin-bottom: 18px;
+    border-radius: 999px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-2);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .eyebrow i { color: var(--gold); }
+
+  /* ============================================================
+     HERO (Início)
+     ============================================================ */
+  .hero { text-align: center; padding: 24px 0 8px; }
+
+  .hero h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(34px, 6vw, 58px);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--teal-bright);
+  }
+
+  .hero p.lede {
+    max-width: 560px;
+    margin: 18px auto 0;
+    color: var(--text-2);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 26px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: 0.2s ease;
+  }
+
+  .btn-primary {
+    color: #06150f;
+    background: linear-gradient(135deg, var(--teal-bright), var(--teal));
+  }
+  .btn-primary:hover { filter: brightness(1.08); }
+
+  .btn-ghost {
+    color: var(--text-1);
+    background: var(--bg-card);
+    border-color: var(--border);
+  }
+  .btn-ghost:hover { background: var(--bg-card-hover); }
+
+  /* ----- versículo em destaque: usa a fonte ajustável,
+           mostrando ao vivo o efeito do controle de tamanho ----- */
+  .verse-card {
+    max-width: 640px;
+    margin: 40px auto 0;
+    padding: 28px clamp(22px, 4vw, 38px);
+    border-radius: var(--radius-lg);
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    text-align: left;
+    position: relative;
+  }
+
+  .verse-card .quote-mark {
+    position: absolute;
+    top: 10px; left: 22px;
+    font-family: var(--font-display);
+    font-size: 54px;
+    color: var(--teal);
+    opacity: 0.35;
+    line-height: 1;
+  }
+
+  .verse-card p {
+    font-family: var(--font-display);
+    font-size: var(--reader-size);
+    line-height: 1.7;
+    color: var(--text-1);
+    margin: 0 0 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .verse-card span {
+    display: block;
+    color: var(--text-3);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  /* ============================================================
+     GRADE DE ATALHOS
+     ============================================================ */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin-top: 48px;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px;
+    text-align: left;
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+
+  .card:hover {
+    background: var(--bg-card-hover);
+    transform: translateY(-3px);
+  }
+
+  .card .ic {
+    width: 42px; height: 42px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(150deg, var(--teal), var(--teal-bright));
+    color: #06150f;
+    font-size: 17px;
+  }
+
+  .card .ic.gold { background: linear-gradient(150deg, var(--gold), #e7c768); }
+
+  .card h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  .card p {
+    margin: 0;
+    font-size: 12.5px;
+    color: var(--text-3);
+    line-height: 1.4;
+  }
+
+  /* ============================================================
+     SEÇÃO genérica (título + corpo) usada nas outras abas
+     ============================================================ */
+  .section-head { margin-bottom: 28px; }
+
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 8px;
+  }
+
+  .section-head p {
+    color: var(--text-2);
+    font-size: 15px;
+    max-width: 540px;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ----- Bíblia ----- */
+  .reader-toolbar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+
+  .reader-toolbar select,
+  .search-box input {
+    font-family: inherit;
+    font-size: 14px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    color: var(--text-1);
+  }
+
+  #selectVersao {
+    max-width: 100%;
+    flex: 1 1 220px;
+  }
+
+  .reader-box {
+    padding: clamp(20px, 4vw, 34px);
+    border-radius: var(--radius-lg);
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    font-family: var(--font-display);
+    font-size: var(--reader-size);
+    line-height: 1.8;
+    color: var(--text-1);
+  }
+
+  .reader-box .v-num {
+    color: var(--teal-bright);
+    font-weight: 700;
+    font-family: var(--font-body);
+    font-size: 0.7em;
+    margin-right: 4px;
+  }
+
+  /* ----- Hinário ----- */
+  .search-box {
+    position: relative;
+    margin-bottom: 18px;
+  }
+  .search-box input { width: 100%; padding-left: 42px; }
+  .search-box i {
+    position: absolute;
+    left: 15px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-3);
+  }
+
+  .hymn-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .hymn-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: 0.15s ease;
+  }
+  .hymn-row:hover { background: var(--bg-card-hover); }
+
+  .hymn-row .num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--teal-bright);
+    width: 38px;
+    flex-shrink: 0;
+  }
+  .hymn-row .title { font-size: 14.5px; font-weight: 600; flex: 1; }
+  .hymn-row .muted { color: var(--text-3); font-size: 12px; }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-3);
+    font-size: 14px;
+  }
+
+  /* ----- Eventos ----- */
+  .schedule { display: flex; flex-direction: column; gap: 10px; }
+
+  .schedule-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 18px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+
+  .schedule-row .day {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    width: 100px;
+    flex-shrink: 0;
+  }
+
+  .schedule-row .info { flex: 1; }
+  .schedule-row .info strong { display: block; font-size: 14.5px; }
+  .schedule-row .info span { color: var(--text-3); font-size: 12.5px; }
+  .schedule-row .time {
+    font-weight: 700;
+    color: var(--teal-bright);
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  /* ----- Contato ----- */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+
+  .contact-card {
+    padding: 22px;
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+
+  .contact-card i {
+    font-size: 18px;
+    color: var(--teal-bright);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .contact-card h4 { margin: 0 0 4px; font-size: 14.5px; font-weight: 800; }
+  .contact-card p, .contact-card a {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--text-2);
+    line-height: 1.5;
+  }
+  .contact-card a:hover { color: var(--teal-bright); }
+
+  .map-frame {
+    width: 100%;
+    height: 260px;
+    border: 0;
+    border-radius: var(--radius-md);
+    margin-top: 18px;
+    filter: grayscale(0.15);
+  }
+
+  /* ----- Caixa de pedido de oração ----- */
+  .prayer-box {
+    margin-top: 18px;
+    padding: 22px;
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+  .prayer-box-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .prayer-box-head i {
+    font-size: 18px;
+    color: var(--teal-bright);
+    margin-top: 3px;
+  }
+  .prayer-box-head h4 { margin: 0 0 4px; font-size: 14.5px; font-weight: 800; }
+  .prayer-box-head p { margin: 0; font-size: 13px; color: var(--text-2); line-height: 1.5; }
+  .prayer-box textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    color: var(--text-1);
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: vertical;
+    margin-bottom: 12px;
+  }
+  .prayer-box textarea:focus { outline: 2px solid var(--teal-bright); outline-offset: 1px; }
+
+  /* ============================================================
+     CALENDÁRIO
+     ============================================================ */
+  .cal-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .cal-header h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 700;
+    min-width: 160px;
+    text-align: center;
+    text-transform: capitalize;
+  }
+
+  .cal-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-size: 11.5px;
+    font-weight: 800;
+    color: var(--text-3);
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+
+  .cal-day {
+    position: relative;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    border-radius: 12px;
+    background: var(--bg-card);
+    border: 1px solid transparent;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.15s ease;
+    color: var(--text-1);
+  }
+  .cal-day:hover { background: var(--bg-card-hover); }
+  .cal-day.empty { background: transparent; cursor: default; }
+  .cal-day.today { border-color: var(--teal-bright); }
+  .cal-day.selected {
+    background: linear-gradient(135deg, var(--teal-bright), var(--teal));
+    color: #06150f;
+  }
+  .cal-day .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+  .cal-day.selected .dot { background: #06150f; }
+
+  .cal-day-events {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cal-event-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+  .cal-event-row .time { font-weight: 700; color: var(--teal-bright); font-size: 13.5px; white-space: nowrap; }
+  .cal-event-row .info { flex: 1; }
+  .cal-event-row .info strong { display: block; font-size: 14px; }
+  .cal-event-row .info span { color: var(--text-3); font-size: 12.5px; }
+  .cal-event-row .row-actions { display: flex; gap: 6px; }
+
+  .row-actions button {
+    width: 30px; height: 30px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-2);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-size: 12.5px;
+    flex-shrink: 0;
+  }
+  .row-actions button:hover { background: var(--bg-card-hover); color: var(--text-1); }
+  .row-actions button.danger:hover { color: #e0654f; }
+
+  .schedule-row .row-actions { margin-left: auto; }
+
+  /* ============================================================
+     SOCIEDADES
+     ============================================================ */
+  .soc-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-bottom: 22px;
+  }
+  .soc-tabs::-webkit-scrollbar { display: none; }
+
+  .soc-tab {
+    flex-shrink: 0;
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-2);
+    font-weight: 800;
+    font-size: 13.5px;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+  .soc-tab:hover { color: var(--text-1); }
+  .soc-tab.active {
+    color: #06150f;
+    background: linear-gradient(135deg, var(--teal-bright), var(--teal));
+    border-color: transparent;
+  }
+
+  .soc-card {
+    padding: 26px;
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+  .soc-card .soc-kicker {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal-bright);
+    margin-bottom: 6px;
+  }
+  .soc-card h3 {
+    margin: 0 0 12px;
+    font-family: var(--font-display);
+    font-size: 24px;
+  }
+  .soc-card p.soc-desc {
+    margin: 0 0 18px;
+    color: var(--text-2);
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+  .soc-card .soc-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+  }
+  .soc-card .soc-meta div { min-width: 140px; }
+  .soc-card .soc-meta span.label {
+    display: block;
+    font-size: 11px;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 3px;
+  }
+  .soc-card .soc-meta span.value { font-size: 14px; font-weight: 700; }
+  .soc-card .btn { margin-top: 18px; }
+
+  /* ============================================================
+     SOBRE
+     ============================================================ */
+  .about-card {
+    padding: 26px;
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+  .about-card .about-text {
+    margin: 10px 0 16px;
+    color: var(--text-2);
+    font-size: 15px;
+    line-height: 1.7;
+    white-space: pre-line;
+  }
+
+  /* ============================================================
+     PIPQ TV
+     ============================================================ */
+  .tv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .tv-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 26px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--text-1);
+    transition: 0.2s ease;
+  }
+  .tv-card:hover { transform: translateY(-2px); }
+  .tv-card i { font-size: 30px; margin-bottom: 6px; }
+  .tv-card h3 { margin: 0; font-family: var(--font-display); font-size: 19px; }
+  .tv-card p { margin: 0; color: var(--text-3); font-size: 13.5px; }
+  .tv-card.tv-youtube { background: linear-gradient(135deg, rgba(255,0,0,0.14), var(--bg-card)); }
+  .tv-card.tv-youtube i { color: #ff3b30; }
+  .tv-card.tv-instagram { background: linear-gradient(135deg, rgba(214,69,151,0.14), var(--bg-card)); }
+  .tv-card.tv-instagram i { color: #d64597; }
+
+
+  /* ============================================================
+     ELEMENTOS DE ADMINISTRADOR
+     ============================================================ */
+  .admin-only { display: none !important; }
+  body.is-admin .admin-only { display: inline-flex !important; }
+
+  .admin-banner {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    margin-bottom: 18px;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, rgba(201, 162, 39, 0.18), rgba(201, 162, 39, 0.06));
+    border: 1px solid rgba(201, 162, 39, 0.35);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  body.is-admin .admin-banner { display: flex; }
+  .admin-banner i { font-size: 14px; }
+  .admin-banner button {
+    margin-left: auto;
+    border: 0;
+    background: transparent;
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 12.5px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .form-field { margin-bottom: 14px; }
+  .form-field label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-2);
+    margin-bottom: 6px;
+  }
+  .form-field input, .form-field textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    color: var(--text-1);
+    font-family: inherit;
+    font-size: 14px;
+  }
+  .form-field input:focus, .form-field textarea:focus { outline: 2px solid var(--teal-bright); outline-offset: 1px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-error {
+    font-size: 13px;
+    color: #e0654f;
+    margin: -4px 0 14px;
+    min-height: 1px;
+  }
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 6px;
+  }
+  .modal-footer .btn-text {
+    border: 0;
+    background: transparent;
+    color: var(--text-2);
+    font-weight: 700;
+    font-size: 13.5px;
+    cursor: pointer;
+    padding: 10px 14px;
+  }
+  .modal-footer .btn-text:hover { color: var(--text-1); }
+
+
+  /* ============================================================
+     MODAL DE CONFIGURAÇÕES
+     ============================================================ */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(2px);
+    z-index: 200;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.25s ease;
+  }
+  .overlay.open { opacity: 1; visibility: visible; }
+
+  .modal {
+    position: fixed;
+    top: 50%; left: 50%;
+    width: min(480px, calc(100% - 32px));
+    z-index: 210;
+    transform: translate(-50%, -46%);
+    opacity: 0;
+    visibility: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--modal-bg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: 0.25s ease;
+  }
+  .modal.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%);
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px 26px;
+    background: linear-gradient(135deg, rgba(31, 122, 92, 0.9), rgba(11, 31, 26, 0.9));
+    color: #fff;
+  }
+  .modal-header .kicker {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 6px;
+  }
+  .modal-header h2 { margin: 0; font-family: var(--font-display); font-size: 28px; }
+  .modal-close {
+    width: 38px; height: 38px;
+    border-radius: 11px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .modal-body { padding: 22px 26px 26px; }
+
+  .setting-group {
+    padding: 16px;
+    margin-bottom: 14px;
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+  }
+  .setting-group h3 { margin: 0 0 4px; font-size: 16px; }
+  .setting-group p { margin: 0 0 12px; font-size: 13px; color: var(--text-2); line-height: 1.5; }
+
+  .theme-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  .toggle-btn {
+    padding: 11px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    color: var(--text-1);
+    font-weight: 700;
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+  .toggle-btn.active {
+    color: #06150f;
+    background: linear-gradient(135deg, var(--teal-bright), var(--teal));
+    border-color: transparent;
+  }
+
+  .font-controls {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    align-items: center;
+  }
+  .font-controls button {
+    width: 42px; height: 42px;
+    border-radius: 11px;
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    color: var(--text-1);
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .font-controls input[type="range"] { width: 100%; accent-color: var(--teal); }
+
+  .font-preview {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: var(--bg-panel);
+    color: var(--text-2);
+    font-family: var(--font-display);
+    font-size: var(--reader-size);
+    line-height: 1.6;
+  }
+
+  .reset-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-2);
+    font-weight: 700;
+    font-size: 13.5px;
+    cursor: pointer;
+  }
+  .reset-btn:hover { color: var(--text-1); border-color: var(--text-2); }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  footer {
+    text-align: center;
+    padding: 30px 20px 40px;
+    color: var(--text-3);
+    font-size: 12.5px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ============================================================
+     ACESSIBILIDADE / RESPONSIVO
+     ============================================================ */
+  :focus-visible { outline: 2px solid var(--teal-bright); outline-offset: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  @media (max-width: 640px) {
+    .brand .brand-text small { display: none; }
+    .schedule-row { flex-wrap: wrap; }
+    .schedule-row .time { margin-left: auto; }
+    .cal-header { justify-content: center; }
+    .cal-header #btnNovoEvento { margin-left: 0 !important; width: 100%; justify-content: center; order: 10; }
+    .soc-card .soc-meta { gap: 16px; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body class="theme-dark">
+
+  <div class="ambient" aria-hidden="true">
+    <img src="./assets/logo-fundo.jpeg" class="bg-logo" alt="" />
+  </div>
+
+  <!-- ============================================================
+       BARRA SUPERIOR — navegação por abas (SPA simples, sem reload)
+       ============================================================ -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="mark">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M 7 48 Q 16 53 20 55 Q 35 36 46 20 L 50 23 L 50 9 Q 45 7 41 6 Q 28 22 18 38 Z" fill="#0298EF"/>
+          <path d="M 93 48 Q 84 53 80 55 Q 65 36 54 20 L 50 23 L 50 9 Q 55 7 59 6 Q 72 22 82 38 Z" fill="#5DA810"/>
+          <path d="M 7 52 Q 16 47 20 45 Q 35 64 46 80 L 50 77 L 50 91 Q 45 93 41 94 Q 28 78 18 62 Z" fill="#CA0A05"/>
+          <path d="M 93 52 Q 84 47 80 45 Q 65 64 54 80 L 50 77 L 50 91 Q 55 93 59 94 Q 72 78 82 62 Z" fill="#F5A204"/>
+          <circle cx="11" cy="42" r="8.5" fill="#0298EF"/>
+          <circle cx="89" cy="42" r="8.5" fill="#5DA810"/>
+          <circle cx="11" cy="58" r="8.5" fill="#CA0A05"/>
+          <circle cx="89" cy="58" r="8.5" fill="#F5A204"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <strong>PIPQ</strong>
+        <small>Primeira Igreja Presbiteriana em Queimados</small>
+      </span>
+    </div>
+
+    <button class="icon-btn menu-trigger" id="btnMenu" aria-label="Abrir menu" aria-expanded="false" aria-controls="sidebarNav">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="topbar-actions">
+      <button class="icon-btn" id="btnAdmin" aria-label="Entrar como administrador" title="Painel do administrador">
+        <i class="fa-solid fa-user-shield"></i>
+      </button>
+      <button class="icon-btn" id="btnSettings" aria-label="Abrir configurações">
+        <i class="fa-solid fa-sliders"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MENU LATERAL — substitui as antigas abas horizontais.
+       Abre com o botão ☰ na barra superior.
+       ============================================================ -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <nav class="sidebar" id="sidebarNav" aria-label="Seções do site">
+    <div class="sidebar-head">
+      <span class="mark sidebar-mark">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M 7 48 Q 16 53 20 55 Q 35 36 46 20 L 50 23 L 50 9 Q 45 7 41 6 Q 28 22 18 38 Z" fill="#0298EF"/>
+          <path d="M 93 48 Q 84 53 80 55 Q 65 36 54 20 L 50 23 L 50 9 Q 55 7 59 6 Q 72 22 82 38 Z" fill="#5DA810"/>
+          <path d="M 7 52 Q 16 47 20 45 Q 35 64 46 80 L 50 77 L 50 91 Q 45 93 41 94 Q 28 78 18 62 Z" fill="#CA0A05"/>
+          <path d="M 93 52 Q 84 47 80 45 Q 65 64 54 80 L 50 77 L 50 91 Q 55 93 59 94 Q 72 78 82 62 Z" fill="#F5A204"/>
+          <circle cx="11" cy="42" r="8.5" fill="#0298EF"/>
+          <circle cx="89" cy="42" r="8.5" fill="#5DA810"/>
+          <circle cx="11" cy="58" r="8.5" fill="#CA0A05"/>
+          <circle cx="89" cy="58" r="8.5" fill="#F5A204"/>
+        </svg>
+      </span>
+      <div>
+        <strong>PIPQ</strong>
+        <small>Primeira Igreja Presbiteriana em Queimados</small>
+      </div>
+      <button class="icon-btn sidebar-close" id="btnCloseSidebar" aria-label="Fechar menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <ul class="sidebar-list" role="tablist">
+      <li><button class="sidebar-item active" role="tab" aria-selected="true" data-view="inicio"><i class="fa-solid fa-house"></i> Início</button></li>
+      <li><button class="sidebar-item" role="tab" aria-selected="false" data-view="sobre"><i class="fa-solid fa-church"></i> Sobre</button></li>
+      <li><button class="sidebar-item" role="tab" aria-selected="false" data-view="biblia"><i class="fa-solid fa-book-bible"></i> Bíblia</button></li>
+      <li><button class="sidebar-item" role="tab" aria-selected="false" data-view="hinario"><i class="fa-solid fa-music"></i> Hinário</button></li>
+      <li><button class="sidebar-item" role="tab" aria-selected="false" data-view="calendario"><i class="fa-solid fa-calendar-days"></i> Calendário</button></li>
+      <li><button class="sidebar-item" role="tab" aria-selected="false" data-view="sociedades"><i class="fa-solid fa-people-group"></i> Sociedades</button></li>
+      <li><button class="sidebar-item" role="tab" aria-selected="false" data-view="estudo-biblico"><i class="fa-solid fa-book-open-reader"></i> Estudo Bíblico</button></li>
+      <li><button class="sidebar-item" role="tab" aria-selected="false" data-view="culto-oracao"><i class="fa-solid fa-hands-praying"></i> Culto de Oração</button></li>
+      <li><button class="sidebar-item" role="tab" aria-selected="false" data-view="pipqtv"><i class="fa-brands fa-youtube"></i> PIPQ TV</button></li>
+      <li><button class="sidebar-item" role="tab" aria-selected="false" data-view="contato"><i class="fa-brands fa-whatsapp"></i> Contato</button></li>
+    </ul>
+  </nav>
+
+  <main class="main">
+
+    <!-- ============================================================
+         INÍCIO
+         ============================================================ -->
+    <section class="view active" id="view-inicio">
+      <div class="hero">
+        <span class="eyebrow"><i class="fa-solid fa-church"></i> Igreja Presbiteriana Reformada · Queimados, RJ</span>
+        <h1>Uma comunidade de fé reformada,<br><em>fundamentada na Palavra</em></h1>
+        <p class="lede">
+          Seja bem-vindo. Aqui você encontra os horários de culto, o hinário, a Bíblia
+          para leitura e as formas de entrar em contato com a nossa igreja.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" data-view="calendario"><i class="fa-solid fa-clock"></i> Ver horários de culto</button>
+          <button class="btn btn-ghost" data-view="contato"><i class="fa-solid fa-location-dot"></i> Como chegar</button>
+        </div>
+
+        <div class="verse-card">
+          <span class="quote-mark" aria-hidden="true">“</span>
+          <p>A tua palavra é lâmpada para os meus pés e luz para o meu caminho.</p>
+          <span>SALMOS 119:105 — versículo do dia</span>
+        </div>
+      </div>
+
+      <div class="grid">
+        <button class="card" data-view="sobre">
+          <span class="ic"><i class="fa-solid fa-church"></i></span>
+          <h3>Sobre</h3>
+          <p>Quem somos e no que cremos.</p>
+        </button>
+        <button class="card" data-view="biblia">
+          <span class="ic"><i class="fa-solid fa-book-bible"></i></span>
+          <h3>Bíblia</h3>
+          <p>Leitura com tamanho de fonte ajustável.</p>
+        </button>
+        <button class="card" data-view="hinario">
+          <span class="ic"><i class="fa-solid fa-music"></i></span>
+          <h3>Hinário</h3>
+          <p>Busque hinos pelo número ou título.</p>
+        </button>
+        <button class="card" data-view="calendario">
+          <span class="ic gold"><i class="fa-solid fa-calendar-days"></i></span>
+          <h3>Calendário</h3>
+          <p>Cultos, escola bíblica e programação do mês.</p>
+        </button>
+        <button class="card" data-view="sociedades">
+          <span class="ic gold"><i class="fa-solid fa-people-group"></i></span>
+          <h3>Sociedades</h3>
+          <p>UCP, UPA, UMP, UPH e SAF.</p>
+        </button>
+        <button class="card" data-view="estudo-biblico">
+          <span class="ic"><i class="fa-solid fa-book-open-reader"></i></span>
+          <h3>Estudo Bíblico</h3>
+          <p>Temática e assuntos do estudo.</p>
+        </button>
+        <button class="card" data-view="culto-oracao">
+          <span class="ic"><i class="fa-solid fa-hands-praying"></i></span>
+          <h3>Culto de Oração</h3>
+          <p>Temática do mês e motivos de oração.</p>
+        </button>
+        <button class="card" data-view="pipqtv">
+          <span class="ic gold"><i class="fa-brands fa-youtube"></i></span>
+          <h3>PIPQ TV</h3>
+          <p>YouTube e Instagram ao vivo.</p>
+        </button>
+        <button class="card" data-view="contato">
+          <span class="ic"><i class="fa-solid fa-hands-praying"></i></span>
+          <h3>Pedido de oração</h3>
+          <p>Envie seu pedido pelo WhatsApp.</p>
+        </button>
+        <button class="card" data-view="contato">
+          <span class="ic"><i class="fa-solid fa-location-dot"></i></span>
+          <h3>Localização</h3>
+          <p>Endereço completo e mapa de acesso.</p>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BÍBLIA
+         ============================================================ -->
+    <section class="view" id="view-biblia">
+      <div class="section-head">
+        <h2>Bíblia</h2>
+        <p>Escolha a versão, o livro e o capítulo. O tamanho do texto segue a preferência definida em Configurações.</p>
+      </div>
+
+      <div class="reader-toolbar">
+        <select id="selectVersao" aria-label="Versão"></select>
+        <select id="selectLivro" aria-label="Livro"></select>
+        <select id="selectCapitulo" aria-label="Capítulo"></select>
+      </div>
+
+      <div class="reader-nav" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <button class="btn btn-ghost" id="btnCapAnterior" type="button"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+        <button class="btn btn-ghost" id="btnCapProximo" type="button">Próximo <i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+
+      <article class="reader-box" id="bibleReader">
+        <div class="empty-state" id="bibleEmptyState">
+          <i class="fa-solid fa-book-bible" style="font-size:26px; display:block; margin-bottom:10px; color:var(--teal-bright)"></i>
+          Para ler a Bíblia completa offline, adicione o arquivo correspondente à versão escolhida na mesma pasta deste site.<br><br>
+          Baixe gratuitamente em:<br>
+          <a href="https://github.com/thiagobodruk/biblia" target="_blank" rel="noopener" style="color:var(--teal-bright); font-weight:700">github.com/thiagobodruk/biblia</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============================================================
+         HINÁRIO
+         ============================================================ -->
+    <section class="view" id="view-hinario">
+      <div class="section-head">
+        <h2>Hinário</h2>
+        <p>Pesquise por número ou título. Os hinos são carregados do arquivo <code>novo-cantico.json</code>.</p>
+      </div>
+
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="hymnSearch" placeholder="Buscar hino por número ou título…" autocomplete="off" />
+      </div>
+
+      <div class="hymn-list" id="hymnList">
+        <!-- preenchido via JS a partir de HYMNS_FALLBACK ou novo-cantico.json -->
+      </div>
+    </section>
+
+    <!-- ============================================================
+         LEITURA DE UM HINO (aberto a partir do Hinário)
+         ============================================================ -->
+    <section class="view" id="view-hino-leitura">
+      <div class="section-head" style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px;">
+        <div>
+          <button class="btn btn-ghost" id="btnVoltarHinario" type="button" style="margin-bottom:14px;">
+            <i class="fa-solid fa-chevron-left"></i> Voltar ao hinário
+          </button>
+          <h2 id="hinoLeituraTitulo">Título do hino</h2>
+          <p id="hinoLeituraNumero" style="margin-top:-6px;"></p>
+        </div>
+      </div>
+
+      <article class="reader-box" id="hinoLeituraTexto"></article>
+    </section>
+
+    <!-- ============================================================
+         EVENTOS
+         ============================================================ -->
+    <!-- ============================================================
+         CALENDÁRIO
+         ============================================================ -->
+    <section class="view" id="view-calendario">
+      <div class="section-head">
+        <h2>Calendário</h2>
+        <p>Programação do mês e horários fixos de culto.</p>
+      </div>
+
+      <div class="admin-banner">
+        <i class="fa-solid fa-user-shield"></i>
+        Modo administrador — você pode adicionar, editar e remover eventos e horários.
+        <button id="btnSairAdminCal">Sair</button>
+      </div>
+
+      <div class="cal-header">
+        <button class="icon-btn" id="btnMesAnterior" aria-label="Mês anterior"><i class="fa-solid fa-chevron-left"></i></button>
+        <h3 id="calMesAno">—</h3>
+        <button class="icon-btn" id="btnMesProximo" aria-label="Próximo mês"><i class="fa-solid fa-chevron-right"></i></button>
+        <button class="btn btn-primary admin-only" id="btnNovoEvento" style="margin-left:auto;">
+          <i class="fa-solid fa-plus"></i> Novo evento
+        </button>
+      </div>
+
+      <div class="cal-weekdays">
+        <span>D</span><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span>
+      </div>
+
+      <div class="cal-grid" id="calGrid"></div>
+
+      <div class="cal-day-events" id="calDayEvents"></div>
+
+      <div class="section-head" style="margin-top:48px;">
+        <h2>Horários fixos</h2>
+        <p>Programação semanal que se repete todas as semanas.</p>
+        <button class="btn btn-ghost admin-only" id="btnNovoHorario" style="margin-top:14px;">
+          <i class="fa-solid fa-plus"></i> Adicionar horário
+        </button>
+      </div>
+
+      <div class="schedule" id="scheduleList"></div>
+    </section>
+
+    <!-- ============================================================
+         SOCIEDADES
+         ============================================================ -->
+    <section class="view" id="view-sociedades">
+      <div class="section-head">
+        <h2>Sociedades</h2>
+        <p>Cada sociedade reúne uma fase diferente da vida da igreja em comunhão e serviço.</p>
+      </div>
+
+      <div class="admin-banner">
+        <i class="fa-solid fa-user-shield"></i>
+        Modo administrador — você pode editar as informações e a agenda de cada sociedade.
+        <button id="btnSairAdminSoc">Sair</button>
+      </div>
+
+      <div class="soc-tabs" role="tablist" aria-label="Sociedades">
+        <button class="soc-tab active" data-soc="ucp" role="tab" aria-selected="true">UCP</button>
+        <button class="soc-tab" data-soc="upa" role="tab" aria-selected="false">UPA</button>
+        <button class="soc-tab" data-soc="ump" role="tab" aria-selected="false">UMP</button>
+        <button class="soc-tab" data-soc="uph" role="tab" aria-selected="false">UPH</button>
+        <button class="soc-tab" data-soc="saf" role="tab" aria-selected="false">SAF</button>
+      </div>
+
+      <article class="soc-card" id="socInfoCard"></article>
+
+      <div class="section-head" style="margin-top:36px; display:flex; align-items:flex-start; justify-content:space-between; gap:14px;">
+        <div>
+          <h2 style="font-size:22px;">Agenda da sociedade</h2>
+          <p>Próximos encontros e atividades.</p>
+        </div>
+        <button class="btn btn-ghost admin-only" id="btnNovaAtividadeSoc">
+          <i class="fa-solid fa-plus"></i> Nova atividade
+        </button>
+      </div>
+
+      <div class="schedule" id="socAgendaList"></div>
+    </section>
+
+    <!-- ============================================================
+         SOBRE
+         ============================================================ -->
+    <section class="view" id="view-sobre">
+      <div class="section-head">
+        <h2>Sobre</h2>
+        <p>Quem somos e aquilo em que cremos.</p>
+      </div>
+
+      <div class="admin-banner">
+        <i class="fa-solid fa-user-shield"></i>
+        Modo administrador — você pode editar os textos desta página.
+        <button id="btnSairAdminSobre">Sair</button>
+      </div>
+
+      <article class="about-card">
+        <span class="soc-kicker">Quem somos</span>
+        <p id="textoQuemSomos" class="about-text"></p>
+        <button class="btn btn-ghost admin-only" id="btnEditarQuemSomos"><i class="fa-solid fa-pen"></i> Editar</button>
+      </article>
+
+      <article class="about-card" style="margin-top:22px;">
+        <span class="soc-kicker">No que cremos</span>
+        <p id="textoNoQueCremos" class="about-text"></p>
+        <button class="btn btn-ghost admin-only" id="btnEditarNoQueCremos"><i class="fa-solid fa-pen"></i> Editar</button>
+      </article>
+    </section>
+
+    <!-- ============================================================
+         ESTUDO BÍBLICO
+         ============================================================ -->
+    <section class="view" id="view-estudo-biblico">
+      <div class="section-head">
+        <h2>Estudo Bíblico</h2>
+        <p>Temática e assuntos abordados em cada estudo.</p>
+      </div>
+
+      <div class="admin-banner">
+        <i class="fa-solid fa-user-shield"></i>
+        Modo administrador — você pode adicionar, editar e remover temas de estudo.
+        <button id="btnSairAdminEstudo">Sair</button>
+      </div>
+
+      <button class="btn btn-primary admin-only" id="btnNovoTemaEstudo" style="margin-bottom:18px;">
+        <i class="fa-solid fa-plus"></i> Novo tema
+      </button>
+
+      <div class="hymn-list" id="temaEstudoList"></div>
+    </section>
+
+    <!-- ============================================================
+         LEITURA DE UM TEMA DE ESTUDO BÍBLICO
+         ============================================================ -->
+    <section class="view" id="view-tema-estudo-leitura">
+      <div class="section-head" style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px;">
+        <div>
+          <button class="btn btn-ghost" id="btnVoltarEstudo" type="button" style="margin-bottom:14px;">
+            <i class="fa-solid fa-chevron-left"></i> Voltar ao estudo bíblico
+          </button>
+          <h2 id="temaEstudoLeituraTitulo">Título do tema</h2>
+          <p id="temaEstudoLeituraData" style="margin-top:-6px;"></p>
+        </div>
+        <button class="btn btn-ghost admin-only" id="btnEditarTemaEstudo"><i class="fa-solid fa-pen"></i> Editar</button>
+      </div>
+
+      <article class="reader-box" id="temaEstudoLeituraTexto"></article>
+    </section>
+
+    <!-- ============================================================
+         CULTO DE ORAÇÃO
+         ============================================================ -->
+    <section class="view" id="view-culto-oracao">
+      <div class="section-head">
+        <h2>Culto de Oração</h2>
+        <p>Temática do mês e motivos de oração.</p>
+      </div>
+
+      <div class="admin-banner">
+        <i class="fa-solid fa-user-shield"></i>
+        Modo administrador — você pode adicionar, editar e remover temas de oração.
+        <button id="btnSairAdminOracao">Sair</button>
+      </div>
+
+      <button class="btn btn-primary admin-only" id="btnNovoTemaOracao" style="margin-bottom:18px;">
+        <i class="fa-solid fa-plus"></i> Novo tema
+      </button>
+
+      <div class="hymn-list" id="temaOracaoList"></div>
+    </section>
+
+    <!-- ============================================================
+         LEITURA DE UM TEMA DE CULTO DE ORAÇÃO
+         ============================================================ -->
+    <section class="view" id="view-tema-oracao-leitura">
+      <div class="section-head" style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px;">
+        <div>
+          <button class="btn btn-ghost" id="btnVoltarOracao" type="button" style="margin-bottom:14px;">
+            <i class="fa-solid fa-chevron-left"></i> Voltar ao culto de oração
+          </button>
+          <h2 id="temaOracaoLeituraTitulo">Título do tema</h2>
+          <p id="temaOracaoLeituraData" style="margin-top:-6px;"></p>
+        </div>
+        <button class="btn btn-ghost admin-only" id="btnEditarTemaOracao"><i class="fa-solid fa-pen"></i> Editar</button>
+      </div>
+
+      <article class="reader-box" id="temaOracaoLeituraTexto"></article>
+    </section>
+
+    <!-- ============================================================
+         PIPQ TV
+         ============================================================ -->
+    <section class="view" id="view-pipqtv">
+      <div class="section-head">
+        <h2>PIPQ TV</h2>
+        <p>Acompanhe nossos cultos e conteúdos pelo YouTube e Instagram.</p>
+      </div>
+
+      <div class="admin-banner">
+        <i class="fa-solid fa-user-shield"></i>
+        Modo administrador — você pode atualizar os links dos canais.
+        <button id="btnSairAdminTv">Sair</button>
+      </div>
+
+      <div class="tv-grid">
+        <a class="tv-card tv-youtube" id="linkYoutube" target="_blank" rel="noopener">
+          <i class="fa-brands fa-youtube"></i>
+          <h3>YouTube</h3>
+          <p>Cultos completos e mensagens.</p>
+        </a>
+        <a class="tv-card tv-instagram" id="linkInstagram" target="_blank" rel="noopener">
+          <i class="fa-brands fa-instagram"></i>
+          <h3>Instagram</h3>
+          <p>Transmissões ao vivo e bastidores.</p>
+        </a>
+      </div>
+
+      <button class="btn btn-ghost admin-only" id="btnEditarPipqTv" style="margin-top:22px;">
+        <i class="fa-solid fa-pen"></i> Editar links
+      </button>
+    </section>
+
+    <!-- ============================================================
+         CONTATO
+         ============================================================ -->
+    <section class="view" id="view-contato">
+      <div class="section-head">
+        <h2>Contato</h2>
+        <p>Fale com a nossa secretaria, envie um pedido de oração ou venha nos visitar.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <i class="fa-solid fa-location-dot"></i>
+          <h4>Endereço</h4>
+          <p>Av. Dr. Pedro Jorge, 95 — Parque<br>Queimados, RJ — 26383-060</p>
+        </div>
+        <div class="contact-card">
+          <i class="fa-brands fa-whatsapp"></i>
+          <h4>WhatsApp</h4>
+          <a href="https://wa.me/552126651760" target="_blank" rel="noopener">(21) 2665-1760</a>
+        </div>
+        <div class="contact-card">
+          <i class="fa-solid fa-envelope"></i>
+          <h4>E-mail</h4>
+          <a href="mailto:contato@igrejaqueimados.org.br">contato@igrejaqueimados.org.br</a>
+        </div>
+      </div>
+
+      <div class="prayer-box">
+        <div class="prayer-box-head">
+          <i class="fa-solid fa-hands-praying"></i>
+          <div>
+            <h4>Pedido de oração</h4>
+            <p>Escreva seu pedido abaixo. Ao tocar em enviar, o WhatsApp abre com a mensagem já escrita — você só confirma o envio.</p>
+          </div>
+        </div>
+        <textarea id="prayerText" placeholder="Escreva aqui o seu pedido de oração…" rows="4"></textarea>
+        <button class="btn btn-primary" id="btnEnviarOracao">
+          <i class="fa-brands fa-whatsapp"></i> Enviar pedido pelo WhatsApp
+        </button>
+      </div>
+
+      <iframe class="map-frame" title="Mapa de localização" loading="lazy"
+        src="https://www.google.com/maps?q=Av.+Dr.+Pedro+Jorge,+95+-+Parque,+Queimados+-+RJ,+26383-060&output=embed"></iframe>
+    </section>
+  </main>
+
+  <footer>
+    Primeira Igreja Presbiteriana em Queimados — © <span id="anoAtual"></span>. Todos os direitos reservados.
+  </footer>
+
+  <!-- ============================================================
+       MODAL DE CONFIGURAÇÕES
+       ============================================================ -->
+  <div class="overlay" id="overlay"></div>
+
+  <div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="configTitulo">
+    <div class="modal-header">
+      <div>
+        <span class="kicker">Preferências</span>
+        <h2 id="configTitulo">Configurações</h2>
+      </div>
+      <button class="modal-close" id="btnCloseSettings" aria-label="Fechar configurações">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="setting-group">
+        <h3>Aparência</h3>
+        <p>Escolha o modo visual mais confortável para leitura e navegação.</p>
+        <div class="theme-toggle" role="group" aria-label="Escolher tema">
+          <button type="button" class="toggle-btn" id="btnTemaEscuro" data-theme="dark">
+            <i class="fa-solid fa-moon"></i> Escuro
+          </button>
+          <button type="button" class="toggle-btn" id="btnTemaClaro" data-theme="light">
+            <i class="fa-solid fa-sun"></i> Claro
+          </button>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <h3>Tamanho do texto</h3>
+        <p>Ajusta a leitura da Bíblia e do hinário.</p>
+        <div class="font-controls">
+          <button type="button" id="btnFontMinus" aria-label="Diminuir fonte">A−</button>
+          <input id="fontRange" type="range" min="14" max="24" step="1" value="17" aria-label="Tamanho do texto" />
+          <button type="button" id="btnFontPlus" aria-label="Aumentar fonte">A+</button>
+        </div>
+        <div class="font-preview" id="fontPreview">Exemplo de leitura: a tua palavra é lâmpada para os meus pés.</div>
+      </div>
+
+      <button class="reset-btn" id="btnResetSettings">Restaurar padrão</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL — LOGIN DO ADMINISTRADOR
+       ============================================================ -->
+  <div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitulo">
+    <div class="modal-header">
+      <div>
+        <span class="kicker">Área restrita</span>
+        <h2 id="loginTitulo">Entrar como administrador</h2>
+      </div>
+      <button class="modal-close" id="btnCloseLogin" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div id="loginAvisoFirebase" class="form-error" style="display:none;">
+        O Firebase ainda não foi configurado neste site (veja firebase-config.js). O login fica disponível depois disso.
+      </div>
+      <form id="formLogin">
+        <div class="form-field">
+          <label for="loginEmail">E-mail</label>
+          <input type="email" id="loginEmail" autocomplete="username" required />
+        </div>
+        <div class="form-field">
+          <label for="loginSenha">Senha</label>
+          <input type="password" id="loginSenha" autocomplete="current-password" required />
+        </div>
+        <div class="form-error" id="loginErro"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn-text" id="btnCancelarLogin">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btnConfirmarLogin">Entrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL — NOVO/EDITAR EVENTO DO CALENDÁRIO
+       ============================================================ -->
+  <div class="modal" id="eventoModal" role="dialog" aria-modal="true" aria-labelledby="eventoTitulo">
+    <div class="modal-header">
+      <div>
+        <span class="kicker">Calendário</span>
+        <h2 id="eventoTitulo">Novo evento</h2>
+      </div>
+      <button class="modal-close" id="btnCloseEvento" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <form id="formEvento">
+        <input type="hidden" id="eventoId" />
+        <div class="form-row">
+          <div class="form-field">
+            <label for="eventoData">Data</label>
+            <input type="date" id="eventoData" required />
+          </div>
+          <div class="form-field">
+            <label for="eventoHora">Horário</label>
+            <input type="time" id="eventoHora" />
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="eventoTituloInput">Título</label>
+          <input type="text" id="eventoTituloInput" placeholder="Ex.: Culto de Ação de Graças" required />
+        </div>
+        <div class="form-field">
+          <label for="eventoDescricao">Descrição (opcional)</label>
+          <textarea id="eventoDescricao" rows="3" placeholder="Detalhes do evento…"></textarea>
+        </div>
+        <div class="form-error" id="eventoErro"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn-text danger admin-only" id="btnExcluirEvento" style="margin-right:auto; color:#e0654f;">Excluir</button>
+          <button type="button" class="btn-text" id="btnCancelarEvento">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btnSalvarEvento">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL — NOVO/EDITAR HORÁRIO FIXO
+       ============================================================ -->
+  <div class="modal" id="horarioModal" role="dialog" aria-modal="true" aria-labelledby="horarioTitulo">
+    <div class="modal-header">
+      <div>
+        <span class="kicker">Horários fixos</span>
+        <h2 id="horarioTitulo">Novo horário</h2>
+      </div>
+      <button class="modal-close" id="btnCloseHorario" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <form id="formHorario">
+        <input type="hidden" id="horarioId" />
+        <div class="form-row">
+          <div class="form-field">
+            <label for="horarioDia">Dia da semana</label>
+            <input type="text" id="horarioDia" placeholder="Ex.: Domingo" required />
+          </div>
+          <div class="form-field">
+            <label for="horarioHora">Horário</label>
+            <input type="text" id="horarioHora" placeholder="Ex.: 10h30" required />
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="horarioTituloInput">Título</label>
+          <input type="text" id="horarioTituloInput" placeholder="Ex.: Culto da manhã" required />
+        </div>
+        <div class="form-field">
+          <label for="horarioDescricao">Descrição (opcional)</label>
+          <input type="text" id="horarioDescricao" placeholder="Ex.: Pregação e Santa Ceia" />
+        </div>
+        <div class="form-error" id="horarioErro"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn-text admin-only" id="btnExcluirHorario" style="margin-right:auto; color:#e0654f;">Excluir</button>
+          <button type="button" class="btn-text" id="btnCancelarHorario">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btnSalvarHorario">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL — EDITAR INFORMAÇÕES DA SOCIEDADE
+       ============================================================ -->
+  <div class="modal" id="sociedadeModal" role="dialog" aria-modal="true" aria-labelledby="sociedadeTitulo">
+    <div class="modal-header">
+      <div>
+        <span class="kicker">Sociedades</span>
+        <h2 id="sociedadeTitulo">Editar informações</h2>
+      </div>
+      <button class="modal-close" id="btnCloseSociedade" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <form id="formSociedade">
+        <input type="hidden" id="sociedadeSigla" />
+        <div class="form-field">
+          <label for="sociedadeExtenso">Nome completo</label>
+          <input type="text" id="sociedadeExtenso" required />
+        </div>
+        <div class="form-field">
+          <label for="sociedadePublico">Público</label>
+          <input type="text" id="sociedadePublico" placeholder="Ex.: Jovens" />
+        </div>
+        <div class="form-field">
+          <label for="sociedadeDescricao">Descrição</label>
+          <textarea id="sociedadeDescricao" rows="4"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="sociedadeEncontro">Quando se reúne</label>
+            <input type="text" id="sociedadeEncontro" placeholder="Ex.: Sábados, 19h" />
+          </div>
+          <div class="form-field">
+            <label for="sociedadeLideranca">Liderança</label>
+            <input type="text" id="sociedadeLideranca" placeholder="Ex.: Nome do líder" />
+          </div>
+        </div>
+        <div class="form-error" id="sociedadeErro"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn-text" id="btnCancelarSociedade">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btnSalvarSociedade">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL — NOVA/EDITAR ATIVIDADE DA SOCIEDADE
+       ============================================================ -->
+  <div class="modal" id="atividadeSocModal" role="dialog" aria-modal="true" aria-labelledby="atividadeSocTitulo">
+    <div class="modal-header">
+      <div>
+        <span class="kicker">Agenda da sociedade</span>
+        <h2 id="atividadeSocTitulo">Nova atividade</h2>
+      </div>
+      <button class="modal-close" id="btnCloseAtividadeSoc" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <form id="formAtividadeSoc">
+        <input type="hidden" id="atividadeSocId" />
+        <div class="form-row">
+          <div class="form-field">
+            <label for="atividadeSocData">Data</label>
+            <input type="date" id="atividadeSocData" required />
+          </div>
+          <div class="form-field">
+            <label for="atividadeSocHora">Horário (opcional)</label>
+            <input type="time" id="atividadeSocHora" />
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="atividadeSocTituloInput">Título</label>
+          <input type="text" id="atividadeSocTituloInput" placeholder="Ex.: Acampamento de jovens" required />
+        </div>
+        <div class="form-field">
+          <label for="atividadeSocDescricao">Descrição (opcional)</label>
+          <textarea id="atividadeSocDescricao" rows="3"></textarea>
+        </div>
+        <div class="form-error" id="atividadeSocErro"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn-text danger admin-only" id="btnExcluirAtividadeSoc" style="margin-right:auto; color:#e0654f;">Excluir</button>
+          <button type="button" class="btn-text" id="btnCancelarAtividadeSoc">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btnSalvarAtividadeSoc">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL — EDITAR TEXTO DE "SOBRE"
+       ============================================================ -->
+  <div class="modal" id="sobreModal" role="dialog" aria-modal="true" aria-labelledby="sobreTitulo">
+    <div class="modal-header">
+      <div>
+        <span class="kicker">Sobre</span>
+        <h2 id="sobreTitulo">Editar texto</h2>
+      </div>
+      <button class="modal-close" id="btnCloseSobre" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <form id="formSobre">
+        <input type="hidden" id="sobreCampo" />
+        <div class="form-field">
+          <label for="sobreTexto" id="sobreTextoLabel">Texto</label>
+          <textarea id="sobreTexto" rows="8"></textarea>
+        </div>
+        <div class="form-error" id="sobreErro"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn-text" id="btnCancelarSobre">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btnSalvarSobre">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL — NOVO/EDITAR TEMA (Estudo Bíblico ou Culto de Oração)
+       ============================================================ -->
+  <div class="modal" id="temaModal" role="dialog" aria-modal="true" aria-labelledby="temaTitulo">
+    <div class="modal-header">
+      <div>
+        <span class="kicker" id="temaKicker">Estudo Bíblico</span>
+        <h2 id="temaTitulo">Novo tema</h2>
+      </div>
+      <button class="modal-close" id="btnCloseTema" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <form id="formTema">
+        <input type="hidden" id="temaId" />
+        <input type="hidden" id="temaTipo" />
+        <div class="form-field">
+          <label for="temaMes">Mês de referência</label>
+          <input type="month" id="temaMes" required />
+        </div>
+        <div class="form-field">
+          <label for="temaTituloInput" id="temaTituloLabel">Título / temática</label>
+          <input type="text" id="temaTituloInput" placeholder="Ex.: A graça de Deus em nossas vidas" required />
+        </div>
+        <div class="form-field">
+          <label for="temaConteudo" id="temaConteudoLabel">Assuntos abordados</label>
+          <textarea id="temaConteudo" rows="6" placeholder="Descreva os assuntos, textos bíblicos e observações deste tema…"></textarea>
+        </div>
+        <div class="form-error" id="temaErro"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn-text danger admin-only" id="btnExcluirTema" style="margin-right:auto; color:#e0654f;">Excluir</button>
+          <button type="button" class="btn-text" id="btnCancelarTema">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btnSalvarTema">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL — EDITAR LINKS DA PIPQ TV
+       ============================================================ -->
+  <div class="modal" id="pipqtvModal" role="dialog" aria-modal="true" aria-labelledby="pipqtvTitulo">
+    <div class="modal-header">
+      <div>
+        <span class="kicker">PIPQ TV</span>
+        <h2 id="pipqtvTitulo">Editar links</h2>
+      </div>
+      <button class="modal-close" id="btnClosePipqTv" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <form id="formPipqTv">
+        <div class="form-field">
+          <label for="pipqtvYoutube">Link do YouTube</label>
+          <input type="url" id="pipqtvYoutube" placeholder="https://www.youtube.com/@..." required />
+        </div>
+        <div class="form-field">
+          <label for="pipqtvInstagram">Link do Instagram</label>
+          <input type="url" id="pipqtvInstagram" placeholder="https://www.instagram.com/..." required />
+        </div>
+        <div class="form-error" id="pipqtvErro"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn-text" id="btnCancelarPipqTv">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btnSalvarPipqTv">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+  import * as AppData from './app-data.js';
+
+  /* ==================================================================
+     ESTADO E PERSISTÊNCIA
+     Tudo fica salvo em localStorage, então as preferências do usuário
+     permanecem entre visitas no mesmo navegador/dispositivo.
+     ================================================================== */
+  const SETTINGS_KEY = 'pipq_settings_v1';
+  const HINARIO_URL = './novo-cantico.json';
+
+  const DEFAULT_SETTINGS = { theme: 'dark', fontSize: 17, bibleVersion: 'acf' };
+
+  function loadSettings() {
+    try {
+      const raw = localStorage.getItem(SETTINGS_KEY);
+      return raw ? { ...DEFAULT_SETTINGS, ...JSON.parse(raw) } : { ...DEFAULT_SETTINGS };
+    } catch (e) {
+      return { ...DEFAULT_SETTINGS };
+    }
+  }
+
+  function saveSettings(settings) {
+    try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); }
+    catch (e) { /* localStorage indisponível — preferência só dura a sessão */ }
+  }
+
+  let settings = loadSettings();
+
+  function applySettings() {
+    document.body.classList.toggle('theme-light', settings.theme === 'light');
+    document.body.classList.toggle('theme-dark', settings.theme === 'dark');
+    document.documentElement.style.setProperty('--reader-size', settings.fontSize + 'px');
+
+    document.getElementById('btnTemaEscuro').classList.toggle('active', settings.theme === 'dark');
+    document.getElementById('btnTemaClaro').classList.toggle('active', settings.theme === 'light');
+    document.getElementById('fontRange').value = settings.fontSize;
+  }
+
+  /* ==================================================================
+     NAVEGAÇÃO POR ABAS (troca de seção sem reload de página)
+     ================================================================== */
+  function goToView(name) {
+    document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + name));
+    document.querySelectorAll('.sidebar-item').forEach(t => {
+      const isActive = t.dataset.view === name;
+      t.classList.toggle('active', isActive);
+      t.setAttribute('aria-selected', isActive);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (name === 'calendario') garantirCalendarioCarregado();
+    if (name === 'sociedades') garantirSociedadesCarregadas();
+    if (name === 'sobre') garantirSobreCarregado();
+    if (name === 'estudo-biblico') garantirTemasCarregados('estudo');
+    if (name === 'culto-oracao') garantirTemasCarregados('oracao');
+    if (name === 'pipqtv') garantirPipqTvCarregado();
+  }
+
+  document.querySelectorAll('[data-view]').forEach(el => {
+    el.addEventListener('click', () => goToView(el.dataset.view));
+  });
+
+  /* ==================================================================
+     MENU LATERAL (sidebar) — abre com o botão ☰, fecha ao escolher
+     uma seção, tocar fora, ou apertar Esc.
+     ================================================================== */
+  const sidebar = document.getElementById('sidebarNav');
+  const sidebarOverlay = document.getElementById('sidebarOverlay');
+  const btnMenu = document.getElementById('btnMenu');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    sidebarOverlay.classList.add('open');
+    document.body.classList.add('sidebar-locked');
+    btnMenu.setAttribute('aria-expanded', 'true');
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('open');
+    document.body.classList.remove('sidebar-locked');
+    btnMenu.setAttribute('aria-expanded', 'false');
+  }
+
+  btnMenu.addEventListener('click', openSidebar);
+  document.getElementById('btnCloseSidebar').addEventListener('click', closeSidebar);
+  sidebarOverlay.addEventListener('click', closeSidebar);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+
+  document.querySelectorAll('.sidebar-item[data-view]').forEach(item => {
+    item.addEventListener('click', closeSidebar);
+  });
+
+  /* ==================================================================
+     SISTEMA GENÉRICO DE MODAIS
+     Todos os modais (configurações, login, evento, horário,
+     sociedade, atividade) compartilham o mesmo overlay de fundo.
+     ================================================================== */
+  const overlay = document.getElementById('overlay');
+  let modalAberto = null;
+
+  function openModal(modal) {
+    if (modalAberto) modalAberto.classList.remove('open');
+    overlay.classList.add('open');
+    modal.classList.add('open');
+    modalAberto = modal;
+    const focusable = modal.querySelector('input, textarea, button.modal-close');
+    if (focusable) focusable.focus();
+  }
+  function closeModal() {
+    if (modalAberto) modalAberto.classList.remove('open');
+    overlay.classList.remove('open');
+    modalAberto = null;
+  }
+
+  overlay.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  /* ----- Configurações (já existia; agora usa o sistema genérico) ----- */
+  const settingsModal = document.getElementById('settingsModal');
+  document.getElementById('btnSettings').addEventListener('click', () => openModal(settingsModal));
+  document.getElementById('btnCloseSettings').addEventListener('click', closeModal);
+
+  /* ==================================================================
+     ADMINISTRADOR — login/logout
+     Enquanto o Firebase não estiver configurado, o botão avisa isso
+     em vez de tentar logar (não tem como autenticar sem servidor).
+     ================================================================== */
+  const loginModal = document.getElementById('loginModal');
+  const btnAdmin = document.getElementById('btnAdmin');
+  let usuarioAdmin = null;
+
+  function setModoAdmin(user) {
+    usuarioAdmin = user;
+    document.body.classList.toggle('is-admin', !!user);
+    btnAdmin.classList.toggle('is-admin', !!user);
+    btnAdmin.title = user ? 'Sair do modo administrador' : 'Painel do administrador';
+  }
+
+  AppData.onAuthChange(setModoAdmin);
+
+  btnAdmin.addEventListener('click', () => {
+    if (usuarioAdmin) {
+      AppData.logout().then(() => setModoAdmin(null));
+      return;
+    }
+    document.getElementById('loginAvisoFirebase').style.display = AppData.FIREBASE_CONFIGURADO ? 'none' : 'block';
+    document.getElementById('loginErro').textContent = '';
+    openModal(loginModal);
+  });
+
+  document.getElementById('btnCloseLogin').addEventListener('click', closeModal);
+  document.getElementById('btnCancelarLogin').addEventListener('click', closeModal);
+
+  document.getElementById('formLogin').addEventListener('submit', async e => {
+    e.preventDefault();
+    const erro = document.getElementById('loginErro');
+    erro.textContent = '';
+    const email = document.getElementById('loginEmail').value.trim();
+    const senha = document.getElementById('loginSenha').value;
+    const btn = document.getElementById('btnConfirmarLogin');
+    btn.disabled = true;
+    btn.textContent = 'Entrando…';
+    try {
+      const user = await AppData.login(email, senha);
+      setModoAdmin(user);
+      closeModal();
+      document.getElementById('formLogin').reset();
+    } catch (err) {
+      erro.textContent = 'Não foi possível entrar. Confira o e-mail e a senha.';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+    }
+  });
+
+  document.querySelectorAll('#btnSairAdminCal, #btnSairAdminSoc, #btnSairAdminSobre, #btnSairAdminEstudo, #btnSairAdminOracao, #btnSairAdminTv')
+    .forEach(btn => btn.addEventListener('click', () => AppData.logout().then(() => setModoAdmin(null))));
+
+  document.getElementById('btnTemaEscuro').addEventListener('click', () => { settings.theme = 'dark'; applySettings(); saveSettings(settings); });
+  document.getElementById('btnTemaClaro').addEventListener('click', () => { settings.theme = 'light'; applySettings(); saveSettings(settings); });
+
+  const fontRange = document.getElementById('fontRange');
+  function setFontSize(value) {
+    settings.fontSize = Math.min(24, Math.max(14, Number(value)));
+    applySettings();
+    saveSettings(settings);
+  }
+  fontRange.addEventListener('input', e => setFontSize(e.target.value));
+  document.getElementById('btnFontMinus').addEventListener('click', () => setFontSize(settings.fontSize - 1));
+  document.getElementById('btnFontPlus').addEventListener('click', () => setFontSize(settings.fontSize + 1));
+
+  document.getElementById('btnResetSettings').addEventListener('click', () => {
+    settings = { ...DEFAULT_SETTINGS };
+    applySettings();
+    saveSettings(settings);
+  });
+
+  /* ==================================================================
+     BÍBLIA — carrega biblia-acf.json (formato thiagobodruk/biblia).
+     Estrutura do arquivo: [{ abbrev, book, chapters: [[v1, v2, ...], ...] }]
+     ================================================================== */
+  /* ==================================================================
+     BÍBLIA — carrega o arquivo da versão escolhida (formato
+     thiagobodruk/biblia). Estrutura de cada arquivo:
+     [{ abbrev, name, chapters: [[v1, v2, ...], ...] }]
+
+     Três versões disponíveis; a pessoa escolhe no seletor "Versão" e
+     essa escolha fica salva (junto com tema/fonte) para a próxima
+     visita. Trocar de versão mantém o mesmo livro/capítulo abertos.
+     ================================================================== */
+  const BIBLE_VERSIONS = {
+    acf: { label: 'Almeida Corrigida Fiel (ACF)', url: './biblia-acf.json' },
+    ara: { label: 'Almeida Revista e Atualizada (ARA)', url: './biblia-ara.json' },
+    naa: { label: 'Nova Almeida Atualizada (NAA)', url: './biblia-naa.json' },
+  };
+  const bibleCache = {}; // guarda em memória os JSONs já carregados, evita rebaixar ~4MB de novo
+  let bibleData = null;
+  let bibleState = { bookIndex: 0, chapterIndex: 0 };
+
+  const selectVersao = document.getElementById('selectVersao');
+  const selectLivro = document.getElementById('selectLivro');
+  const selectCapitulo = document.getElementById('selectCapitulo');
+  const bibleReader = document.getElementById('bibleReader');
+  const bibleEmptyState = document.getElementById('bibleEmptyState');
+
+  function fillVersaoSelect() {
+    selectVersao.innerHTML = Object.entries(BIBLE_VERSIONS)
+      .map(([key, v]) => `<option value="${key}">${v.label}</option>`)
+      .join('');
+    selectVersao.value = settings.bibleVersion;
+  }
+
+  function renderChapter() {
+    if (!bibleData) return;
+    const book = bibleData[bibleState.bookIndex];
+    const verses = book.chapters[bibleState.chapterIndex] || [];
+    bibleReader.innerHTML = verses
+      .map((texto, i) => `<p><span class="v-num">${i + 1}</span>${texto}</p>`)
+      .join('');
+  }
+
+  function fillChapterSelect() {
+    const book = bibleData[bibleState.bookIndex];
+    selectCapitulo.innerHTML = book.chapters
+      .map((_, i) => `<option value="${i}">Capítulo ${i + 1}</option>`)
+      .join('');
+    selectCapitulo.value = bibleState.chapterIndex;
+  }
+
+  function fillBookSelect() {
+    selectLivro.innerHTML = bibleData
+      .map((b, i) => `<option value="${i}">${b.name}</option>`)
+      .join('');
+    selectLivro.value = bibleState.bookIndex;
+  }
+
+  function carregarVersao(versionKey, manterPosicao) {
+    const versao = BIBLE_VERSIONS[versionKey];
+    if (!versao) return;
+
+    if (bibleCache[versionKey]) {
+      aplicarDadosVersao(bibleCache[versionKey], manterPosicao);
+      return;
+    }
+
+    selectVersao.disabled = true;
+    bibleReader.innerHTML = '<div class="empty-state">Carregando…</div>';
+
+    fetch(versao.url)
+      .then(res => { if (!res.ok) throw new Error('not found'); return res.json(); })
+      .then(data => {
+        bibleCache[versionKey] = data;
+        aplicarDadosVersao(data, manterPosicao);
+      })
+      .catch(() => {
+        bibleData = null;
+        bibleReader.innerHTML = '';
+        bibleEmptyState.querySelector('code')?.remove();
+        bibleReader.appendChild(bibleEmptyState);
+      })
+      .finally(() => { selectVersao.disabled = false; });
+  }
+
+  function aplicarDadosVersao(data, manterPosicao) {
+    const bookNameAntes = manterPosicao && bibleData ? bibleData[bibleState.bookIndex]?.name : null;
+    bibleData = data;
+
+    if (bookNameAntes) {
+      const idx = bibleData.findIndex(b => b.name === bookNameAntes);
+      if (idx >= 0) bibleState.bookIndex = idx;
+      if (bibleState.bookIndex >= bibleData.length) bibleState.bookIndex = 0;
+      const totalCaps = bibleData[bibleState.bookIndex].chapters.length;
+      if (bibleState.chapterIndex >= totalCaps) bibleState.chapterIndex = totalCaps - 1;
+    } else {
+      bibleState = { bookIndex: 0, chapterIndex: 0 };
+    }
+
+    fillBookSelect();
+    fillChapterSelect();
+    renderChapter();
+  }
+
+  selectVersao.addEventListener('change', e => {
+    settings.bibleVersion = e.target.value;
+    saveSettings(settings);
+    carregarVersao(settings.bibleVersion, true);
+  });
+
+  selectLivro.addEventListener('change', e => {
+    bibleState.bookIndex = Number(e.target.value);
+    bibleState.chapterIndex = 0;
+    fillChapterSelect();
+    renderChapter();
+  });
+
+  selectCapitulo.addEventListener('change', e => {
+    bibleState.chapterIndex = Number(e.target.value);
+    renderChapter();
+  });
+
+  document.getElementById('btnCapAnterior').addEventListener('click', () => {
+    if (!bibleData) return;
+    const book = bibleData[bibleState.bookIndex];
+    if (bibleState.chapterIndex > 0) {
+      bibleState.chapterIndex--;
+    } else if (bibleState.bookIndex > 0) {
+      bibleState.bookIndex--;
+      bibleState.chapterIndex = bibleData[bibleState.bookIndex].chapters.length - 1;
+      fillBookSelect();
+    } else { return; }
+    fillChapterSelect();
+    renderChapter();
+    selectLivro.value = bibleState.bookIndex;
+  });
+
+  document.getElementById('btnCapProximo').addEventListener('click', () => {
+    if (!bibleData) return;
+    const book = bibleData[bibleState.bookIndex];
+    if (bibleState.chapterIndex < book.chapters.length - 1) {
+      bibleState.chapterIndex++;
+    } else if (bibleState.bookIndex < bibleData.length - 1) {
+      bibleState.bookIndex++;
+      bibleState.chapterIndex = 0;
+      fillBookSelect();
+    } else { return; }
+    fillChapterSelect();
+    renderChapter();
+    selectLivro.value = bibleState.bookIndex;
+  });
+
+  fillVersaoSelect();
+  carregarVersao(settings.bibleVersion, false);
+
+  /* ==================================================================
+     HINÁRIO — carrega de novo-cantico.json; usa lista de exemplo
+     se o arquivo não existir (ex.: ao abrir o HTML direto do disco).
+     Cada hino: { numero: '1' | '400-A', titulo: '...', letra: '...' }.
+     'numero' pode ter sufixo de letra (ex.: "325-A"), por isso o
+     preenchimento com zeros olha só a parte numérica.
+     ================================================================== */
+  const HYMNS_FALLBACK = [
+    { numero: '1', titulo: 'Grandioso És Tu', letra: '' },
+    { numero: '2', titulo: 'Castelo Forte', letra: '' },
+    { numero: '3', titulo: 'Ao Deus de Abraão Louvai', letra: '' },
+    { numero: '4', titulo: 'Sublime Graça', letra: '' },
+    { numero: '5', titulo: 'Bondade de Jesus', letra: '' }
+  ];
+
+  function formatHymnNumber(numero) {
+    const str = String(numero);
+    const match = str.match(/^(\d+)(.*)$/);
+    if (!match) return str;
+    return match[1].padStart(3, '0') + match[2];
+  }
+
+  function renderHymns(list) {
+    const container = document.getElementById('hymnList');
+    if (!list.length) {
+      container.innerHTML = '<div class="empty-state">Nenhum hino encontrado.</div>';
+      return;
+    }
+    container.innerHTML = list.map(h => `
+      <div class="hymn-row" tabindex="0" data-numero="${h.numero}" role="button">
+        <span class="num">${formatHymnNumber(h.numero)}</span>
+        <span class="title">${h.titulo}</span>
+        <span class="muted"><i class="fa-solid fa-chevron-right"></i></span>
+      </div>
+    `).join('');
+
+    container.querySelectorAll('.hymn-row').forEach(row => {
+      const open = () => openHymn(row.dataset.numero);
+      row.addEventListener('click', open);
+      row.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+      });
+    });
+  }
+
+  let allHymns = HYMNS_FALLBACK;
+
+  function openHymn(numero) {
+    const hino = allHymns.find(h => String(h.numero) === String(numero));
+    if (!hino) return;
+    document.getElementById('hinoLeituraTitulo').textContent = hino.titulo;
+    document.getElementById('hinoLeituraNumero').textContent = 'Hino ' + formatHymnNumber(hino.numero);
+    const corpo = document.getElementById('hinoLeituraTexto');
+    const estrofes = (hino.letra || '').split(/\n\s*\n/).filter(s => s.trim());
+    corpo.innerHTML = estrofes.length
+      ? estrofes.map(e => `<p>${e.replace(/\n/g, '<br>')}</p>`).join('')
+      : '<div class="empty-state">Letra não disponível para este hino.</div>';
+    goToView('hino-leitura');
+  }
+
+  document.getElementById('btnVoltarHinario').addEventListener('click', () => goToView('hinario'));
+
+  fetch(HINARIO_URL)
+    .then(res => { if (!res.ok) throw new Error('not found'); return res.json(); })
+    .then(data => { allHymns = Array.isArray(data) ? data : HYMNS_FALLBACK; renderHymns(allHymns); })
+    .catch(() => renderHymns(allHymns));
+
+  document.getElementById('hymnSearch').addEventListener('input', e => {
+    const term = e.target.value.trim().toLowerCase();
+    const filtered = allHymns.filter(h =>
+      String(h.numero).toLowerCase().includes(term) || h.titulo.toLowerCase().includes(term)
+    );
+    renderHymns(filtered);
+  });
+
+  /* ==================================================================
+     CALENDÁRIO
+     ================================================================== */
+  const MESES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+  let calMesAtual = new Date();
+  calMesAtual.setDate(1);
+  let calEventos = [];
+  let calDiaSelecionado = null;
+
+  function dataLocalISO(date) {
+    return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
+  }
+
+  function eventosDoDia(isoData) {
+    return calEventos.filter(ev => ev.data === isoData).sort((a, b) => (a.hora || '').localeCompare(b.hora || ''));
+  }
+
+  function renderCalGrid() {
+    const ano = calMesAtual.getFullYear();
+    const mes = calMesAtual.getMonth();
+    document.getElementById('calMesAno').textContent = MESES[mes] + ' de ' + ano;
+
+    const primeiroDiaSemana = new Date(ano, mes, 1).getDay();
+    const totalDias = new Date(ano, mes + 1, 0).getDate();
+    const hojeISO = dataLocalISO(new Date());
+
+    const grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+
+    for (let i = 0; i < primeiroDiaSemana; i++) {
+      grid.insertAdjacentHTML('beforeend', '<div class="cal-day empty"></div>');
+    }
+
+    for (let dia = 1; dia <= totalDias; dia++) {
+      const iso = dataLocalISO(new Date(ano, mes, dia));
+      const temEvento = calEventos.some(ev => ev.data === iso);
+      const isHoje = iso === hojeISO;
+      const isSelecionado = iso === calDiaSelecionado;
+      const el = document.createElement('div');
+      el.className = 'cal-day' + (isHoje ? ' today' : '') + (isSelecionado ? ' selected' : '');
+      el.dataset.data = iso;
+      el.innerHTML = '<span>' + dia + '</span>' + (temEvento ? '<span class="dot"></span>' : '');
+      el.addEventListener('click', () => { calDiaSelecionado = iso; renderCalGrid(); renderCalDayEvents(); });
+      grid.appendChild(el);
+    }
+  }
+
+  function renderCalDayEvents() {
+    const container = document.getElementById('calDayEvents');
+    if (!calDiaSelecionado) {
+      container.innerHTML = '<div class="empty-state">Toque em um dia do calendário para ver a programação.</div>';
+      return;
+    }
+    const eventos = eventosDoDia(calDiaSelecionado);
+    const [ano, mes, dia] = calDiaSelecionado.split('-');
+    const tituloData = dia + ' de ' + MESES[parseInt(mes, 10) - 1] + ' de ' + ano;
+
+    if (!eventos.length) {
+      container.innerHTML = `<div class="empty-state">Nenhum evento em ${tituloData}.</div>`;
+      return;
+    }
+    container.innerHTML = eventos.map(ev => `
+      <div class="cal-event-row" data-id="${ev.id}">
+        ${ev.hora ? `<span class="time">${ev.hora}</span>` : ''}
+        <span class="info"><strong>${ev.titulo}</strong>${ev.descricao ? `<span>${ev.descricao}</span>` : ''}</span>
+        <span class="row-actions admin-only">
+          <button class="edit" aria-label="Editar evento"><i class="fa-solid fa-pen"></i></button>
+        </span>
+      </div>
+    `).join('');
+    container.querySelectorAll('.cal-event-row .edit').forEach(btn => {
+      btn.addEventListener('click', () => abrirEditarEvento(btn.closest('.cal-event-row').dataset.id));
+    });
+  }
+
+  async function carregarEventos() {
+    calEventos = await AppData.getEventos();
+    renderCalGrid();
+    renderCalDayEvents();
+  }
+
+  document.getElementById('btnMesAnterior').addEventListener('click', () => {
+    calMesAtual.setMonth(calMesAtual.getMonth() - 1);
+    renderCalGrid();
+  });
+  document.getElementById('btnMesProximo').addEventListener('click', () => {
+    calMesAtual.setMonth(calMesAtual.getMonth() + 1);
+    renderCalGrid();
+  });
+
+  /* ----- formulário de evento (criar / editar / excluir) ----- */
+  const eventoModal = document.getElementById('eventoModal');
+
+  function abrirNovoEvento() {
+    document.getElementById('eventoTitulo').textContent = 'Novo evento';
+    document.getElementById('formEvento').reset();
+    document.getElementById('eventoId').value = '';
+    document.getElementById('eventoData').value = calDiaSelecionado || dataLocalISO(new Date());
+    document.getElementById('eventoErro').textContent = '';
+    document.getElementById('btnExcluirEvento').style.display = 'none';
+    openModal(eventoModal);
+  }
+
+  function abrirEditarEvento(id) {
+    const ev = calEventos.find(e => e.id === id);
+    if (!ev) return;
+    document.getElementById('eventoTitulo').textContent = 'Editar evento';
+    document.getElementById('eventoId').value = ev.id;
+    document.getElementById('eventoData').value = ev.data;
+    document.getElementById('eventoHora').value = ev.hora || '';
+    document.getElementById('eventoTituloInput').value = ev.titulo;
+    document.getElementById('eventoDescricao').value = ev.descricao || '';
+    document.getElementById('eventoErro').textContent = '';
+    document.getElementById('btnExcluirEvento').style.display = 'inline-flex';
+    openModal(eventoModal);
+  }
+
+  document.getElementById('btnNovoEvento').addEventListener('click', abrirNovoEvento);
+  document.getElementById('btnCloseEvento').addEventListener('click', closeModal);
+  document.getElementById('btnCancelarEvento').addEventListener('click', closeModal);
+
+  document.getElementById('formEvento').addEventListener('submit', async e => {
+    e.preventDefault();
+    const erro = document.getElementById('eventoErro');
+    erro.textContent = '';
+    const evento = {
+      id: document.getElementById('eventoId').value || null,
+      data: document.getElementById('eventoData').value,
+      hora: document.getElementById('eventoHora').value,
+      titulo: document.getElementById('eventoTituloInput').value.trim(),
+      descricao: document.getElementById('eventoDescricao').value.trim(),
+    };
+    try {
+      await AppData.salvarEvento(evento);
+      closeModal();
+      await carregarEventos();
+    } catch (err) {
+      erro.textContent = err.message || 'Não foi possível salvar. Tente novamente.';
+    }
+  });
+
+  document.getElementById('btnExcluirEvento').addEventListener('click', async () => {
+    const id = document.getElementById('eventoId').value;
+    if (!id) return;
+    if (!confirm('Tem certeza que deseja excluir este evento?')) return;
+    try {
+      await AppData.excluirEvento(id);
+      closeModal();
+      await carregarEventos();
+    } catch (err) {
+      document.getElementById('eventoErro').textContent = err.message || 'Não foi possível excluir.';
+    }
+  });
+
+  /* ----- horários fixos de culto ----- */
+  let calHorarios = [];
+
+  function renderHorarios() {
+    const container = document.getElementById('scheduleList');
+    if (!calHorarios.length) {
+      container.innerHTML = '<div class="empty-state">Nenhum horário cadastrado ainda.</div>';
+      return;
+    }
+    container.innerHTML = calHorarios.map(h => `
+      <div class="schedule-row" data-id="${h.id}">
+        <span class="day">${h.dia}</span>
+        <span class="info"><strong>${h.titulo}</strong>${h.descricao ? `<span>${h.descricao}</span>` : ''}</span>
+        <span class="time">${h.hora}</span>
+        <span class="row-actions admin-only">
+          <button class="edit" aria-label="Editar horário"><i class="fa-solid fa-pen"></i></button>
+        </span>
+      </div>
+    `).join('');
+    container.querySelectorAll('.schedule-row .edit').forEach(btn => {
+      btn.addEventListener('click', () => abrirEditarHorario(btn.closest('.schedule-row').dataset.id));
+    });
+  }
+
+  async function carregarHorarios() {
+    calHorarios = await AppData.getHorarios();
+    renderHorarios();
+  }
+
+  const horarioModal = document.getElementById('horarioModal');
+
+  function abrirNovoHorario() {
+    document.getElementById('horarioTitulo').textContent = 'Novo horário';
+    document.getElementById('formHorario').reset();
+    document.getElementById('horarioId').value = '';
+    document.getElementById('horarioErro').textContent = '';
+    document.getElementById('btnExcluirHorario').style.display = 'none';
+    openModal(horarioModal);
+  }
+
+  function abrirEditarHorario(id) {
+    const h = calHorarios.find(x => x.id === id);
+    if (!h) return;
+    document.getElementById('horarioTitulo').textContent = 'Editar horário';
+    document.getElementById('horarioId').value = h.id;
+    document.getElementById('horarioDia').value = h.dia;
+    document.getElementById('horarioHora').value = h.hora;
+    document.getElementById('horarioTituloInput').value = h.titulo;
+    document.getElementById('horarioDescricao').value = h.descricao || '';
+    document.getElementById('horarioErro').textContent = '';
+    document.getElementById('btnExcluirHorario').style.display = 'inline-flex';
+    openModal(horarioModal);
+  }
+
+  document.getElementById('btnNovoHorario').addEventListener('click', abrirNovoHorario);
+  document.getElementById('btnCloseHorario').addEventListener('click', closeModal);
+  document.getElementById('btnCancelarHorario').addEventListener('click', closeModal);
+
+  document.getElementById('formHorario').addEventListener('submit', async e => {
+    e.preventDefault();
+    const erro = document.getElementById('horarioErro');
+    erro.textContent = '';
+    const id = document.getElementById('horarioId').value || null;
+    const horario = {
+      id,
+      dia: document.getElementById('horarioDia').value.trim(),
+      hora: document.getElementById('horarioHora').value.trim(),
+      titulo: document.getElementById('horarioTituloInput').value.trim(),
+      descricao: document.getElementById('horarioDescricao').value.trim(),
+      ordem: id ? (calHorarios.find(h => h.id === id)?.ordem ?? calHorarios.length + 1) : calHorarios.length + 1,
+    };
+    try {
+      await AppData.salvarHorario(horario);
+      closeModal();
+      await carregarHorarios();
+    } catch (err) {
+      erro.textContent = err.message || 'Não foi possível salvar. Tente novamente.';
+    }
+  });
+
+  document.getElementById('btnExcluirHorario').addEventListener('click', async () => {
+    const id = document.getElementById('horarioId').value;
+    if (!id) return;
+    if (!confirm('Tem certeza que deseja excluir este horário?')) return;
+    try {
+      await AppData.excluirHorario(id);
+      closeModal();
+      await carregarHorarios();
+    } catch (err) {
+      document.getElementById('horarioErro').textContent = err.message || 'Não foi possível excluir.';
+    }
+  });
+
+  /* só carrega calendário/horários quando a aba é aberta de fato,
+     pra não gastar leituras do Firestore sem necessidade */
+  let calendarioCarregado = false;
+  function garantirCalendarioCarregado() {
+    if (calendarioCarregado) return;
+    calendarioCarregado = true;
+    carregarEventos();
+    carregarHorarios();
+  }
+
+  /* ==================================================================
+     SOCIEDADES
+     ================================================================== */
+  const SOC_SIGLAS = ['ucp', 'upa', 'ump', 'uph', 'saf'];
+  let socAtual = 'ucp';
+  let socInfoAtual = null;
+  let socAgendaAtual = [];
+
+  function renderSocInfo() {
+    const info = socInfoAtual;
+    const card = document.getElementById('socInfoCard');
+    if (!info) { card.innerHTML = '<div class="empty-state">Carregando…</div>'; return; }
+    card.innerHTML = `
+      <span class="soc-kicker">${info.publico || 'Sociedade'}</span>
+      <h3>${info.extenso}</h3>
+      <p class="soc-desc">${info.descricao || ''}</p>
+      <div class="soc-meta">
+        <div><span class="label">Quando se reúne</span><span class="value">${info.encontro || 'A definir'}</span></div>
+        <div><span class="label">Liderança</span><span class="value">${info.lideranca || 'A definir'}</span></div>
+      </div>
+      <button class="btn btn-ghost admin-only" id="btnEditarSociedade"><i class="fa-solid fa-pen"></i> Editar informações</button>
+    `;
+    document.getElementById('btnEditarSociedade')?.addEventListener('click', abrirEditarSociedade);
+  }
+
+  function renderSocAgenda() {
+    const container = document.getElementById('socAgendaList');
+    if (!socAgendaAtual.length) {
+      container.innerHTML = '<div class="empty-state">Nenhuma atividade cadastrada ainda para esta sociedade.</div>';
+      return;
+    }
+    const lista = [...socAgendaAtual].sort((a, b) => (a.data || '').localeCompare(b.data || ''));
+    container.innerHTML = lista.map(a => {
+      const [ano, mes, dia] = (a.data || '').split('-');
+      const dataFmt = dia ? `${dia}/${mes}` : '';
+      return `
+        <div class="schedule-row" data-id="${a.id}">
+          <span class="day">${dataFmt}</span>
+          <span class="info"><strong>${a.titulo}</strong>${a.descricao ? `<span>${a.descricao}</span>` : ''}</span>
+          ${a.hora ? `<span class="time">${a.hora}</span>` : ''}
+          <span class="row-actions admin-only">
+            <button class="edit" aria-label="Editar atividade"><i class="fa-solid fa-pen"></i></button>
+          </span>
+        </div>
+      `;
+    }).join('');
+    container.querySelectorAll('.schedule-row .edit').forEach(btn => {
+      btn.addEventListener('click', () => abrirEditarAtividadeSoc(btn.closest('.schedule-row').dataset.id));
+    });
+  }
+
+  async function carregarSociedade(sigla) {
+    socAtual = sigla;
+    document.getElementById('socInfoCard').innerHTML = '<div class="empty-state">Carregando…</div>';
+    document.getElementById('socAgendaList').innerHTML = '';
+    const [info, agenda] = await Promise.all([
+      AppData.getSociedadeInfo(sigla),
+      AppData.getAgendaSociedade(sigla),
+    ]);
+    socInfoAtual = info;
+    socAgendaAtual = agenda;
+    renderSocInfo();
+    renderSocAgenda();
+  }
+
+  document.querySelectorAll('.soc-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.soc-tab').forEach(t => {
+        t.classList.toggle('active', t === tab);
+        t.setAttribute('aria-selected', t === tab);
+      });
+      carregarSociedade(tab.dataset.soc);
+    });
+  });
+
+  let sociedadesCarregadas = false;
+  function garantirSociedadesCarregadas() {
+    if (sociedadesCarregadas) return;
+    sociedadesCarregadas = true;
+    carregarSociedade(socAtual);
+  }
+
+  /* ----- editar informações da sociedade ----- */
+  const sociedadeModal = document.getElementById('sociedadeModal');
+
+  function abrirEditarSociedade() {
+    const info = socInfoAtual;
+    document.getElementById('sociedadeTitulo').textContent = 'Editar ' + (info.nome || socAtual.toUpperCase());
+    document.getElementById('sociedadeSigla').value = socAtual;
+    document.getElementById('sociedadeExtenso').value = info.extenso || '';
+    document.getElementById('sociedadePublico').value = info.publico || '';
+    document.getElementById('sociedadeDescricao').value = info.descricao || '';
+    document.getElementById('sociedadeEncontro').value = info.encontro || '';
+    document.getElementById('sociedadeLideranca').value = info.lideranca || '';
+    document.getElementById('sociedadeErro').textContent = '';
+    openModal(sociedadeModal);
+  }
+
+  document.getElementById('btnCloseSociedade').addEventListener('click', closeModal);
+  document.getElementById('btnCancelarSociedade').addEventListener('click', closeModal);
+
+  document.getElementById('formSociedade').addEventListener('submit', async e => {
+    e.preventDefault();
+    const erro = document.getElementById('sociedadeErro');
+    erro.textContent = '';
+    const sigla = document.getElementById('sociedadeSigla').value;
+    const dados = {
+      extenso: document.getElementById('sociedadeExtenso').value.trim(),
+      publico: document.getElementById('sociedadePublico').value.trim(),
+      descricao: document.getElementById('sociedadeDescricao').value.trim(),
+      encontro: document.getElementById('sociedadeEncontro').value.trim(),
+      lideranca: document.getElementById('sociedadeLideranca').value.trim(),
+    };
+    try {
+      await AppData.salvarSociedadeInfo(sigla, dados);
+      closeModal();
+      await carregarSociedade(sigla);
+    } catch (err) {
+      erro.textContent = err.message || 'Não foi possível salvar. Tente novamente.';
+    }
+  });
+
+  /* ----- nova/editar atividade da sociedade ----- */
+  const atividadeSocModal = document.getElementById('atividadeSocModal');
+
+  function abrirNovaAtividadeSoc() {
+    document.getElementById('atividadeSocTitulo').textContent = 'Nova atividade';
+    document.getElementById('formAtividadeSoc').reset();
+    document.getElementById('atividadeSocId').value = '';
+    document.getElementById('atividadeSocErro').textContent = '';
+    document.getElementById('btnExcluirAtividadeSoc').style.display = 'none';
+    openModal(atividadeSocModal);
+  }
+
+  function abrirEditarAtividadeSoc(id) {
+    const a = socAgendaAtual.find(x => x.id === id);
+    if (!a) return;
+    document.getElementById('atividadeSocTitulo').textContent = 'Editar atividade';
+    document.getElementById('atividadeSocId').value = a.id;
+    document.getElementById('atividadeSocData').value = a.data || '';
+    document.getElementById('atividadeSocHora').value = a.hora || '';
+    document.getElementById('atividadeSocTituloInput').value = a.titulo || '';
+    document.getElementById('atividadeSocDescricao').value = a.descricao || '';
+    document.getElementById('atividadeSocErro').textContent = '';
+    document.getElementById('btnExcluirAtividadeSoc').style.display = 'inline-flex';
+    openModal(atividadeSocModal);
+  }
+
+  document.getElementById('btnNovaAtividadeSoc').addEventListener('click', abrirNovaAtividadeSoc);
+  document.getElementById('btnCloseAtividadeSoc').addEventListener('click', closeModal);
+  document.getElementById('btnCancelarAtividadeSoc').addEventListener('click', closeModal);
+
+  document.getElementById('formAtividadeSoc').addEventListener('submit', async e => {
+    e.preventDefault();
+    const erro = document.getElementById('atividadeSocErro');
+    erro.textContent = '';
+    const atividade = {
+      id: document.getElementById('atividadeSocId').value || null,
+      data: document.getElementById('atividadeSocData').value,
+      hora: document.getElementById('atividadeSocHora').value,
+      titulo: document.getElementById('atividadeSocTituloInput').value.trim(),
+      descricao: document.getElementById('atividadeSocDescricao').value.trim(),
+    };
+    try {
+      await AppData.salvarAtividadeSociedade(socAtual, atividade);
+      closeModal();
+      await carregarSociedade(socAtual);
+    } catch (err) {
+      erro.textContent = err.message || 'Não foi possível salvar. Tente novamente.';
+    }
+  });
+
+  document.getElementById('btnExcluirAtividadeSoc').addEventListener('click', async () => {
+    const id = document.getElementById('atividadeSocId').value;
+    if (!id) return;
+    if (!confirm('Tem certeza que deseja excluir esta atividade?')) return;
+    try {
+      await AppData.excluirAtividadeSociedade(id);
+      closeModal();
+      await carregarSociedade(socAtual);
+    } catch (err) {
+      document.getElementById('atividadeSocErro').textContent = err.message || 'Não foi possível excluir.';
+    }
+  });
+
+  /* ==================================================================
+     PEDIDO DE ORAÇÃO — abre o WhatsApp com a mensagem já escrita
+     ================================================================== */
+  const WHATSAPP_NUMERO = '552126651760';
+  document.getElementById('btnEnviarOracao').addEventListener('click', () => {
+    const texto = document.getElementById('prayerText').value.trim();
+    const mensagem = texto
+      ? `Olá! Gostaria de compartilhar um pedido de oração:\n\n${texto}`
+      : 'Olá! Gostaria de compartilhar um pedido de oração.';
+    const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagem)}`;
+    window.open(url, '_blank', 'noopener');
+  });
+
+  /* ==================================================================
+     SOBRE — "Quem Somos" e "No Que Cremos"
+     ================================================================== */
+  let sobreAtual = null;
+
+  async function carregarSobre() {
+    sobreAtual = await AppData.getSobre();
+    document.getElementById('textoQuemSomos').textContent = sobreAtual.quemSomos || '';
+    document.getElementById('textoNoQueCremos').textContent = sobreAtual.noQueCremos || '';
+  }
+
+  let sobreCarregado = false;
+  function garantirSobreCarregado() {
+    if (sobreCarregado) return;
+    sobreCarregado = true;
+    carregarSobre();
+  }
+
+  const sobreModal = document.getElementById('sobreModal');
+
+  function abrirEditarSobre(campo) {
+    const labels = { quemSomos: 'Quem somos', noQueCremos: 'No que cremos' };
+    document.getElementById('sobreTitulo').textContent = 'Editar — ' + labels[campo];
+    document.getElementById('sobreTextoLabel').textContent = labels[campo];
+    document.getElementById('sobreCampo').value = campo;
+    document.getElementById('sobreTexto').value = (sobreAtual && sobreAtual[campo]) || '';
+    document.getElementById('sobreErro').textContent = '';
+    openModal(sobreModal);
+  }
+
+  document.getElementById('btnEditarQuemSomos').addEventListener('click', () => abrirEditarSobre('quemSomos'));
+  document.getElementById('btnEditarNoQueCremos').addEventListener('click', () => abrirEditarSobre('noQueCremos'));
+  document.getElementById('btnCloseSobre').addEventListener('click', closeModal);
+  document.getElementById('btnCancelarSobre').addEventListener('click', closeModal);
+
+  document.getElementById('formSobre').addEventListener('submit', async e => {
+    e.preventDefault();
+    const erro = document.getElementById('sobreErro');
+    erro.textContent = '';
+    const campo = document.getElementById('sobreCampo').value;
+    const texto = document.getElementById('sobreTexto').value.trim();
+    try {
+      await AppData.salvarSobre({ [campo]: texto });
+      closeModal();
+      await carregarSobre();
+    } catch (err) {
+      erro.textContent = err.message || 'Não foi possível salvar. Tente novamente.';
+    }
+  });
+
+  /* ==================================================================
+     TEMAS — Estudo Bíblico e Culto de Oração
+     As duas seções compartilham a mesma lógica; o que muda é o
+     "tipo" ('estudo' ou 'oracao') e os elementos do DOM usados.
+     ================================================================== */
+  const TIPOS_TEMA = {
+    estudo: {
+      listaId: 'temaEstudoList', vazioMsg: 'Nenhum tema de estudo cadastrado ainda.',
+      leituraView: 'tema-estudo-leitura', tituloId: 'temaEstudoLeituraTitulo', dataId: 'temaEstudoLeituraData',
+      textoId: 'temaEstudoLeituraTexto', voltarView: 'estudo-biblico', editarBtnId: 'btnEditarTemaEstudo',
+      kicker: 'Estudo Bíblico', tituloLabel: 'Título / temática', conteudoLabel: 'Assuntos abordados',
+      conteudoPlaceholder: 'Descreva os assuntos, textos bíblicos e observações deste tema…',
+    },
+    oracao: {
+      listaId: 'temaOracaoList', vazioMsg: 'Nenhum tema de oração cadastrado ainda.',
+      leituraView: 'tema-oracao-leitura', tituloId: 'temaOracaoLeituraTitulo', dataId: 'temaOracaoLeituraData',
+      textoId: 'temaOracaoLeituraTexto', voltarView: 'culto-oracao', editarBtnId: 'btnEditarTemaOracao',
+      kicker: 'Culto de Oração', tituloLabel: 'Temática do mês', conteudoLabel: 'Motivos de oração',
+      conteudoPlaceholder: 'Liste os motivos de oração deste mês…',
+    },
+  };
+
+  const temasCache = { estudo: [], oracao: [] };
+
+  function formatMesAno(mesIso) {
+    if (!mesIso) return '';
+    const [ano, mes] = mesIso.split('-');
+    return MESES[parseInt(mes, 10) - 1] + ' de ' + ano;
+  }
+
+  function renderTemaList(tipo) {
+    const cfg = TIPOS_TEMA[tipo];
+    const lista = temasCache[tipo];
+    const container = document.getElementById(cfg.listaId);
+    if (!lista.length) {
+      container.innerHTML = `<div class="empty-state">${cfg.vazioMsg}</div>`;
+      return;
+    }
+    container.innerHTML = lista.map(t => `
+      <div class="hymn-row" tabindex="0" data-id="${t.id}" role="button">
+        <span class="title" style="flex:1;"><strong>${t.titulo}</strong><br><span class="muted" style="font-size:12px;">${formatMesAno(t.data)}</span></span>
+        <span class="muted"><i class="fa-solid fa-chevron-right"></i></span>
+      </div>
+    `).join('');
+    container.querySelectorAll('.hymn-row').forEach(row => {
+      const open = () => abrirLeituraTema(tipo, row.dataset.id);
+      row.addEventListener('click', open);
+      row.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+    });
+  }
+
+  async function carregarTemas(tipo) {
+    temasCache[tipo] = await AppData.getTemas(tipo);
+    renderTemaList(tipo);
+  }
+
+  function abrirLeituraTema(tipo, id) {
+    const cfg = TIPOS_TEMA[tipo];
+    const tema = temasCache[tipo].find(t => t.id === id);
+    if (!tema) return;
+    document.getElementById(cfg.tituloId).textContent = tema.titulo;
+    document.getElementById(cfg.dataId).textContent = formatMesAno(tema.data);
+    const corpo = document.getElementById(cfg.textoId);
+    const paragrafos = (tema.conteudo || '').split(/\n\s*\n/).filter(s => s.trim());
+    corpo.innerHTML = paragrafos.length
+      ? paragrafos.map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('')
+      : '<div class="empty-state">Sem conteúdo cadastrado para este tema.</div>';
+    document.getElementById(cfg.editarBtnId).dataset.tipo = tipo;
+    document.getElementById(cfg.editarBtnId).dataset.id = id;
+    goToView(cfg.leituraView);
+  }
+
+  document.getElementById('btnVoltarEstudo').addEventListener('click', () => goToView('estudo-biblico'));
+  document.getElementById('btnVoltarOracao').addEventListener('click', () => goToView('culto-oracao'));
+
+  const temasCarregados = { estudo: false, oracao: false };
+  function garantirTemasCarregados(tipo) {
+    if (temasCarregados[tipo]) return;
+    temasCarregados[tipo] = true;
+    carregarTemas(tipo);
+  }
+
+  /* ----- formulário de tema (criar / editar / excluir) ----- */
+  const temaModal = document.getElementById('temaModal');
+
+  function abrirNovoTema(tipo) {
+    const cfg = TIPOS_TEMA[tipo];
+    document.getElementById('temaKicker').textContent = cfg.kicker;
+    document.getElementById('temaTitulo').textContent = 'Novo tema';
+    document.getElementById('temaTituloLabel').textContent = cfg.tituloLabel;
+    document.getElementById('temaConteudoLabel').textContent = cfg.conteudoLabel;
+    document.getElementById('temaConteudo').placeholder = cfg.conteudoPlaceholder;
+    document.getElementById('formTema').reset();
+    document.getElementById('temaId').value = '';
+    document.getElementById('temaTipo').value = tipo;
+    document.getElementById('temaErro').textContent = '';
+    document.getElementById('btnExcluirTema').style.display = 'none';
+    openModal(temaModal);
+  }
+
+  function abrirEditarTema(tipo, id) {
+    const cfg = TIPOS_TEMA[tipo];
+    const tema = temasCache[tipo].find(t => t.id === id);
+    if (!tema) return;
+    document.getElementById('temaKicker').textContent = cfg.kicker;
+    document.getElementById('temaTitulo').textContent = 'Editar tema';
+    document.getElementById('temaTituloLabel').textContent = cfg.tituloLabel;
+    document.getElementById('temaConteudoLabel').textContent = cfg.conteudoLabel;
+    document.getElementById('temaId').value = tema.id;
+    document.getElementById('temaTipo').value = tipo;
+    document.getElementById('temaMes').value = tema.data || '';
+    document.getElementById('temaTituloInput').value = tema.titulo || '';
+    document.getElementById('temaConteudo').value = tema.conteudo || '';
+    document.getElementById('temaErro').textContent = '';
+    document.getElementById('btnExcluirTema').style.display = 'inline-flex';
+    openModal(temaModal);
+  }
+
+  document.getElementById('btnNovoTemaEstudo').addEventListener('click', () => abrirNovoTema('estudo'));
+  document.getElementById('btnNovoTemaOracao').addEventListener('click', () => abrirNovoTema('oracao'));
+  document.getElementById('btnEditarTemaEstudo').addEventListener('click', e => abrirEditarTema(e.currentTarget.dataset.tipo, e.currentTarget.dataset.id));
+  document.getElementById('btnEditarTemaOracao').addEventListener('click', e => abrirEditarTema(e.currentTarget.dataset.tipo, e.currentTarget.dataset.id));
+  document.getElementById('btnCloseTema').addEventListener('click', closeModal);
+  document.getElementById('btnCancelarTema').addEventListener('click', closeModal);
+
+  document.getElementById('formTema').addEventListener('submit', async e => {
+    e.preventDefault();
+    const erro = document.getElementById('temaErro');
+    erro.textContent = '';
+    const tipo = document.getElementById('temaTipo').value;
+    const tema = {
+      id: document.getElementById('temaId').value || null,
+      data: document.getElementById('temaMes').value,
+      titulo: document.getElementById('temaTituloInput').value.trim(),
+      conteudo: document.getElementById('temaConteudo').value.trim(),
+    };
+    try {
+      await AppData.salvarTema(tipo, tema);
+      closeModal();
+      await carregarTemas(tipo);
+      goToView(TIPOS_TEMA[tipo].voltarView);
+    } catch (err) {
+      erro.textContent = err.message || 'Não foi possível salvar. Tente novamente.';
+    }
+  });
+
+  document.getElementById('btnExcluirTema').addEventListener('click', async () => {
+    const id = document.getElementById('temaId').value;
+    const tipo = document.getElementById('temaTipo').value;
+    if (!id) return;
+    if (!confirm('Tem certeza que deseja excluir este tema?')) return;
+    try {
+      await AppData.excluirTema(id);
+      closeModal();
+      await carregarTemas(tipo);
+      goToView(TIPOS_TEMA[tipo].voltarView);
+    } catch (err) {
+      document.getElementById('temaErro').textContent = err.message || 'Não foi possível excluir.';
+    }
+  });
+
+  /* ==================================================================
+     PIPQ TV
+     ================================================================== */
+  async function carregarPipqTv() {
+    const dados = await AppData.getPipqTv();
+    document.getElementById('linkYoutube').href = dados.youtube || '#';
+    document.getElementById('linkInstagram').href = dados.instagram || '#';
+  }
+
+  let pipqTvCarregado = false;
+  function garantirPipqTvCarregado() {
+    if (pipqTvCarregado) return;
+    pipqTvCarregado = true;
+    carregarPipqTv();
+  }
+
+  const pipqtvModal = document.getElementById('pipqtvModal');
+
+  document.getElementById('btnEditarPipqTv').addEventListener('click', async () => {
+    const dados = await AppData.getPipqTv();
+    document.getElementById('pipqtvYoutube').value = dados.youtube || '';
+    document.getElementById('pipqtvInstagram').value = dados.instagram || '';
+    document.getElementById('pipqtvErro').textContent = '';
+    openModal(pipqtvModal);
+  });
+  document.getElementById('btnClosePipqTv').addEventListener('click', closeModal);
+  document.getElementById('btnCancelarPipqTv').addEventListener('click', closeModal);
+
+  document.getElementById('formPipqTv').addEventListener('submit', async e => {
+    e.preventDefault();
+    const erro = document.getElementById('pipqtvErro');
+    erro.textContent = '';
+    const dados = {
+      youtube: document.getElementById('pipqtvYoutube').value.trim(),
+      instagram: document.getElementById('pipqtvInstagram').value.trim(),
+    };
+    try {
+      await AppData.salvarPipqTv(dados);
+      closeModal();
+      await carregarPipqTv();
+    } catch (err) {
+      erro.textContent = err.message || 'Não foi possível salvar. Tente novamente.';
+    }
+  });
+
+  /* ==================================================================
+     SERVICE WORKER — habilita o funcionamento 100% offline.
+     Na primeira visita com internet, ele guarda o site e os dados em
+     cache; depois disso, tudo continua funcionando sem conexão.
+     ================================================================== */
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => { /* offline puro via Capacitor não precisa disso */ });
+    });
+  }
+
+  /* ==================================================================
+     INICIALIZAÇÃO
+     ================================================================== */
+  document.getElementById('anoAtual').textContent = new Date().getFullYear();
+  applySettings();
+  renderHymns(allHymns);
+  </script>
+</body>
+</html>
