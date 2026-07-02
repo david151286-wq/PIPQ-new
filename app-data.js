@@ -338,9 +338,155 @@ async function salvarPipqTv(dados) {
   await setDoc(doc(db, 'pipqtv', 'principal'), dados, { merge: true });
 }
 
+/* ==================================================================
+   MINISTÉRIOS — constante com os 5 ministérios e suas funções típicas
+   ================================================================== */
+const MINISTERIOS = {
+  louvor:   { label: 'Louvor/Música',  funcoes: ['Dirigente', 'Vocal', 'Violão', 'Teclado', 'Bateria', 'Baixo', 'Outro instrumento'] },
+  recepcao: { label: 'Recepção',       funcoes: ['Recepcionista', 'Porteiro'] },
+  diaconia: { label: 'Diaconia',       funcoes: ['Diácono', 'Auxiliar de diaconia'] },
+  oracao:   { label: 'Oração',         funcoes: ['Oração de abertura', 'Oração de encerramento', 'Intercessão'] },
+  midia:    { label: 'Mídia',          funcoes: ['Projeção', 'Transmissão ao vivo', 'Fotografia', 'Sonoplastia'] },
+};
+
+const MINISTERIOS_SIGLAS = Object.keys(MINISTERIOS);
+
+/* ==================================================================
+   MEMBROS
+   Coleção Firestore: "membros"
+   Campos: nome (string), ministerios (array de siglas), ativo (bool)
+   ================================================================== */
+const EXEMPLO_MEMBROS = [
+  { id: 'ex1', nome: 'Exemplo: João Silva', ministerios: ['louvor', 'oracao'], ativo: true },
+  { id: 'ex2', nome: 'Exemplo: Maria Santos', ministerios: ['recepcao'], ativo: true },
+];
+
+async function getMembros() {
+  const ok = await initFirebase();
+  if (!ok) return EXEMPLO_MEMBROS;
+  try {
+    const { collection, getDocs, query, where, orderBy } = firebaseModules;
+    const snap = await getDocs(query(collection(db, 'membros'), where('ativo', '==', true), orderBy('nome')));
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch (err) {
+    console.warn('Erro ao buscar membros, usando exemplo.', err);
+    return EXEMPLO_MEMBROS;
+  }
+}
+
+async function salvarMembro(membro) {
+  const ok = await initFirebase();
+  if (!ok) throw new Error(mensagemFalhaFirebase());
+  const { collection, doc, setDoc, addDoc } = firebaseModules;
+  const dados = { nome: membro.nome, ministerios: membro.ministerios || [], ativo: membro.ativo !== false };
+  if (membro.id) {
+    await setDoc(doc(db, 'membros', membro.id), dados);
+    return membro.id;
+  } else {
+    const ref = await addDoc(collection(db, 'membros'), dados);
+    return ref.id;
+  }
+}
+
+async function excluirMembro(id) {
+  const ok = await initFirebase();
+  if (!ok) throw new Error(mensagemFalhaFirebase());
+  const { doc, setDoc } = firebaseModules;
+  await setDoc(doc(db, 'membros', id), { ativo: false }, { merge: true });
+}
+
+/* ==================================================================
+   ESCALAS
+   Coleção Firestore: "escalas"
+   Campos: data ("AAAA-MM-DD"), ministerio (sigla), funcao (string),
+   membrosIds (array de IDs), observacao (string opcional)
+   ================================================================== */
+const EXEMPLO_ESCALAS = [];
+
+async function getEscalas(filtros = {}) {
+  const ok = await initFirebase();
+  if (!ok) return EXEMPLO_ESCALAS;
+  try {
+    const { collection, getDocs, query, where, orderBy } = firebaseModules;
+    const constraints = [orderBy('data')];
+    if (filtros.ministerio) constraints.push(where('ministerio', '==', filtros.ministerio));
+    if (filtros.dataInicio) constraints.push(where('data', '>=', filtros.dataInicio));
+    if (filtros.dataFim) constraints.push(where('data', '<=', filtros.dataFim));
+    const snap = await getDocs(query(collection(db, 'escalas'), ...constraints));
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch (err) {
+    console.warn('Erro ao buscar escalas, usando exemplo.', err);
+    return EXEMPLO_ESCALAS;
+  }
+}
+
+async function getEscalasPorMembro(membroId) {
+  const ok = await initFirebase();
+  if (!ok) return [];
+  try {
+    const { collection, getDocs, query, where, orderBy } = firebaseModules;
+    const snap = await getDocs(query(
+      collection(db, 'escalas'),
+      where('membrosIds', 'array-contains', membroId),
+      orderBy('data')
+    ));
+    return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch (err) {
+    console.warn('Erro ao buscar escalas do membro.', err);
+    return [];
+  }
+}
+
+async function verificarConflitoMembro(membroId, data, escalaIdIgnorar) {
+  const ok = await initFirebase();
+  if (!ok) return [];
+  try {
+    const { collection, getDocs, query, where } = firebaseModules;
+    const snap = await getDocs(query(
+      collection(db, 'escalas'),
+      where('membrosIds', 'array-contains', membroId),
+      where('data', '==', data)
+    ));
+    return snap.docs
+      .filter(d => d.id !== escalaIdIgnorar)
+      .map(d => ({ id: d.id, ...d.data() }));
+  } catch (err) {
+    return [];
+  }
+}
+
+async function salvarEscala(escala) {
+  const ok = await initFirebase();
+  if (!ok) throw new Error(mensagemFalhaFirebase());
+  const { collection, doc, setDoc, addDoc } = firebaseModules;
+  const dados = {
+    data: escala.data,
+    ministerio: escala.ministerio,
+    funcao: escala.funcao,
+    membrosIds: escala.membrosIds || [],
+    observacao: escala.observacao || '',
+  };
+  if (escala.id) {
+    await setDoc(doc(db, 'escalas', escala.id), dados);
+    return escala.id;
+  } else {
+    const ref = await addDoc(collection(db, 'escalas'), dados);
+    return ref.id;
+  }
+}
+
+async function excluirEscala(id) {
+  const ok = await initFirebase();
+  if (!ok) throw new Error(mensagemFalhaFirebase());
+  const { doc, deleteDoc } = firebaseModules;
+  await deleteDoc(doc(db, 'escalas', id));
+}
+
 export {
   FIREBASE_CONFIGURADO,
   SOCIEDADES_INFO,
+  MINISTERIOS,
+  MINISTERIOS_SIGLAS,
   login,
   logout,
   onAuthChange,
@@ -362,4 +508,12 @@ export {
   excluirTema,
   getPipqTv,
   salvarPipqTv,
+  getMembros,
+  salvarMembro,
+  excluirMembro,
+  getEscalas,
+  getEscalasPorMembro,
+  verificarConflitoMembro,
+  salvarEscala,
+  excluirEscala,
 };

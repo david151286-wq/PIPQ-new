@@ -915,6 +915,179 @@
   .tv-card.tv-instagram { background: linear-gradient(135deg, rgba(214,69,151,0.14), var(--bg-card)); }
   .tv-card.tv-instagram i { color: #d64597; }
 
+  /* ============================================================
+     ESCALAS
+     ============================================================ */
+  .escala-busca-wrap { position: relative; margin-bottom: 4px; }
+
+  .escala-busca-resultado {
+    position: absolute;
+    top: 100%; left: 0; right: 0;
+    z-index: 50;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin-top: 4px;
+    max-height: 260px;
+    overflow-y: auto;
+    box-shadow: var(--shadow);
+  }
+  .busca-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .busca-item:last-child { border-bottom: 0; }
+  .busca-item:hover { background: var(--bg-card-hover); }
+  .busca-item strong { display: block; }
+  .busca-item span { font-size: 12px; color: var(--text-3); }
+
+  .escala-grade {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 8px;
+  }
+
+  .escala-dia {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .escala-dia-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+  .escala-dia-header .data-label {
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--teal-bright);
+    white-space: nowrap;
+  }
+  .escala-dia-header .semana-label {
+    font-size: 12px;
+    color: var(--text-3);
+    text-transform: capitalize;
+  }
+
+  .escala-entrada {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .escala-entrada:last-child { border-bottom: 0; }
+
+  .escala-min-badge {
+    flex-shrink: 0;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-2);
+    white-space: nowrap;
+  }
+
+  .escala-entrada-info { flex: 1; min-width: 0; }
+  .escala-entrada-info .funcao {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-2);
+    margin-bottom: 4px;
+  }
+  .escala-membros-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .membro-chip {
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 99px;
+    background: linear-gradient(135deg, rgba(47,156,121,0.18), rgba(47,156,121,0.06));
+    border: 1px solid rgba(47,156,121,0.25);
+    color: var(--teal-bright);
+  }
+  .escala-entrada .row-actions { align-self: center; }
+
+  .escala-empty {
+    padding: 28px 16px;
+    text-align: center;
+    color: var(--text-3);
+    font-size: 14px;
+  }
+
+  /* Conflito de escala */
+  .conflito-alerta {
+    background: rgba(224, 101, 79, 0.12);
+    border: 1px solid rgba(224, 101, 79, 0.35);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: 13px;
+    color: #e0654f;
+    margin: 8px 0;
+    display: none;
+  }
+  .conflito-alerta.visivel { display: block; }
+
+  /* Resultado de busca por pessoa */
+  .pessoa-escala-card {
+    padding: 22px;
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .pessoa-escala-card h4 { margin: 0 0 14px; font-family: var(--font-display); }
+  .pessoa-escala-card .escala-item-linha {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+  }
+  .pessoa-escala-card .escala-item-linha:last-child { border-bottom: 0; }
+  .pessoa-escala-card .data-col { font-weight: 700; color: var(--teal-bright); white-space: nowrap; min-width: 80px; }
+  .pessoa-escala-card .info-col { color: var(--text-2); }
+
+  /* Checkboxes de membros/ministérios nos modais */
+  .membros-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 4px 2px;
+  }
+  .membros-checkboxes label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    transition: 0.15s ease;
+  }
+  .membros-checkboxes label:hover { background: var(--bg-card-hover); }
+  .membros-checkboxes input[type=checkbox] { accent-color: var(--teal-bright); width: 16px; height: 16px; }
+
 
   /* ============================================================
      ELEMENTOS DE ADMINISTRADOR
@@ -1166,7 +1339,7 @@
 <body class="theme-dark">
 
   <div class="ambient" aria-hidden="true">
-    <img src="logo-fundo.jpeg" class="bg-logo" alt="" />
+    <img src="./assets/logo-fundo.jpeg" class="bg-logo" alt="" />
   </div>
 
   <!-- ============================================================
@@ -1176,14 +1349,15 @@
     <div class="brand">
       <span class="mark">
         <svg viewBox="0 0 100 100" aria-hidden="true">
-          <path d="M 7 48 Q 16 53 20 55 Q 35 36 46 20 L 50 23 L 50 9 Q 45 7 41 6 Q 28 22 18 38 Z" fill="#0298EF"/>
-          <path d="M 93 48 Q 84 53 80 55 Q 65 36 54 20 L 50 23 L 50 9 Q 55 7 59 6 Q 72 22 82 38 Z" fill="#5DA810"/>
-          <path d="M 7 52 Q 16 47 20 45 Q 35 64 46 80 L 50 77 L 50 91 Q 45 93 41 94 Q 28 78 18 62 Z" fill="#CA0A05"/>
-          <path d="M 93 52 Q 84 47 80 45 Q 65 64 54 80 L 50 77 L 50 91 Q 55 93 59 94 Q 72 78 82 62 Z" fill="#F5A204"/>
-          <circle cx="11" cy="42" r="8.5" fill="#0298EF"/>
-          <circle cx="89" cy="42" r="8.5" fill="#5DA810"/>
-          <circle cx="11" cy="58" r="8.5" fill="#CA0A05"/>
-          <circle cx="89" cy="58" r="8.5" fill="#F5A204"/>
+          <path d="M 50 4 C 58 4 64 9 66 16 C 74 14 82 19 84 27 C 91 29 96 36 94 44 C 98 49 97 57 91 61 C 93 68 89 75 82 77 C 81 84 75 89 68 88 C 64 94 55 96 50 92 C 45 96 36 94 32 88 C 25 89 19 84 18 77 C 11 75 7 68 9 61 C 3 57 2 49 6 44 C 4 36 9 29 16 27 C 18 19 26 14 34 16 C 36 9 42 4 50 4 Z" fill="#2e4a3a" opacity="0.9"/>
+          <path d="M 15 55 Q 22 59 25 61 Q 37 45 46 32 L 50 35 L 50 22 Q 46 20 43 19 Q 32 33 24 47 Z" fill="#0298EF"/>
+          <path d="M 85 55 Q 78 59 75 61 Q 63 45 54 32 L 50 35 L 50 22 Q 54 20 57 19 Q 68 33 76 47 Z" fill="#5DA810"/>
+          <path d="M 15 58 Q 22 54 25 52 Q 37 68 46 81 L 50 78 L 50 91 Q 46 93 43 94 Q 32 80 24 66 Z" fill="#CA0A05"/>
+          <path d="M 85 58 Q 78 54 75 52 Q 63 68 54 81 L 50 78 L 50 91 Q 54 93 57 94 Q 68 80 76 66 Z" fill="#F5A204"/>
+          <circle cx="19.5" cy="49" r="7" fill="#0298EF"/>
+          <circle cx="80.5" cy="49" r="7" fill="#5DA810"/>
+          <circle cx="19.5" cy="64" r="7" fill="#CA0A05"/>
+          <circle cx="80.5" cy="64" r="7" fill="#F5A204"/>
         </svg>
       </span>
       <span class="brand-text">
@@ -1216,14 +1390,15 @@
     <div class="sidebar-head">
       <span class="mark sidebar-mark">
         <svg viewBox="0 0 100 100" aria-hidden="true">
-          <path d="M 7 48 Q 16 53 20 55 Q 35 36 46 20 L 50 23 L 50 9 Q 45 7 41 6 Q 28 22 18 38 Z" fill="#0298EF"/>
-          <path d="M 93 48 Q 84 53 80 55 Q 65 36 54 20 L 50 23 L 50 9 Q 55 7 59 6 Q 72 22 82 38 Z" fill="#5DA810"/>
-          <path d="M 7 52 Q 16 47 20 45 Q 35 64 46 80 L 50 77 L 50 91 Q 45 93 41 94 Q 28 78 18 62 Z" fill="#CA0A05"/>
-          <path d="M 93 52 Q 84 47 80 45 Q 65 64 54 80 L 50 77 L 50 91 Q 55 93 59 94 Q 72 78 82 62 Z" fill="#F5A204"/>
-          <circle cx="11" cy="42" r="8.5" fill="#0298EF"/>
-          <circle cx="89" cy="42" r="8.5" fill="#5DA810"/>
-          <circle cx="11" cy="58" r="8.5" fill="#CA0A05"/>
-          <circle cx="89" cy="58" r="8.5" fill="#F5A204"/>
+          <path d="M 50 4 C 58 4 64 9 66 16 C 74 14 82 19 84 27 C 91 29 96 36 94 44 C 98 49 97 57 91 61 C 93 68 89 75 82 77 C 81 84 75 89 68 88 C 64 94 55 96 50 92 C 45 96 36 94 32 88 C 25 89 19 84 18 77 C 11 75 7 68 9 61 C 3 57 2 49 6 44 C 4 36 9 29 16 27 C 18 19 26 14 34 16 C 36 9 42 4 50 4 Z" fill="#2e4a3a" opacity="0.9"/>
+          <path d="M 15 55 Q 22 59 25 61 Q 37 45 46 32 L 50 35 L 50 22 Q 46 20 43 19 Q 32 33 24 47 Z" fill="#0298EF"/>
+          <path d="M 85 55 Q 78 59 75 61 Q 63 45 54 32 L 50 35 L 50 22 Q 54 20 57 19 Q 68 33 76 47 Z" fill="#5DA810"/>
+          <path d="M 15 58 Q 22 54 25 52 Q 37 68 46 81 L 50 78 L 50 91 Q 46 93 43 94 Q 32 80 24 66 Z" fill="#CA0A05"/>
+          <path d="M 85 58 Q 78 54 75 52 Q 63 68 54 81 L 50 78 L 50 91 Q 54 93 57 94 Q 68 80 76 66 Z" fill="#F5A204"/>
+          <circle cx="19.5" cy="49" r="7" fill="#0298EF"/>
+          <circle cx="80.5" cy="49" r="7" fill="#5DA810"/>
+          <circle cx="19.5" cy="64" r="7" fill="#CA0A05"/>
+          <circle cx="80.5" cy="64" r="7" fill="#F5A204"/>
         </svg>
       </span>
       <div>
@@ -1245,6 +1420,7 @@
       <li><button class="sidebar-item" role="tab" aria-selected="false" data-view="estudo-biblico"><i class="fa-solid fa-book-open-reader"></i> Estudo Bíblico</button></li>
       <li><button class="sidebar-item" role="tab" aria-selected="false" data-view="culto-oracao"><i class="fa-solid fa-hands-praying"></i> Culto de Oração</button></li>
       <li><button class="sidebar-item" role="tab" aria-selected="false" data-view="pipqtv"><i class="fa-brands fa-youtube"></i> PIPQ TV</button></li>
+      <li><button class="sidebar-item" role="tab" aria-selected="false" data-view="escalas"><i class="fa-solid fa-list-check"></i> Escalas</button></li>
       <li><button class="sidebar-item" role="tab" aria-selected="false" data-view="contato"><i class="fa-brands fa-whatsapp"></i> Contato</button></li>
     </ul>
   </nav>
@@ -1314,6 +1490,11 @@
           <span class="ic gold"><i class="fa-brands fa-youtube"></i></span>
           <h3>PIPQ TV</h3>
           <p>YouTube e Instagram ao vivo.</p>
+        </button>
+        <button class="card" data-view="escalas">
+          <span class="ic"><i class="fa-solid fa-list-check"></i></span>
+          <h3>Escalas</h3>
+          <p>Louvor, recepção, diaconia e mais.</p>
         </button>
         <button class="card" data-view="contato">
           <span class="ic"><i class="fa-solid fa-hands-praying"></i></span>
@@ -1617,6 +1798,79 @@
       <button class="btn btn-ghost admin-only" id="btnEditarPipqTv" style="margin-top:22px;">
         <i class="fa-solid fa-pen"></i> Editar links
       </button>
+    </section>
+
+    <!-- ============================================================
+         ESCALAS
+         ============================================================ -->
+    <section class="view" id="view-escalas">
+      <div class="section-head">
+        <h2>Escalas</h2>
+        <p>Programação de ministérios — quem serve em cada culto.</p>
+      </div>
+
+      <div class="admin-banner">
+        <i class="fa-solid fa-user-shield"></i>
+        Modo administrador — adicione, edite ou remova entradas de escala e gerencie membros.
+        <button id="btnSairAdminEscalas">Sair</button>
+      </div>
+
+      <!-- Busca por pessoa -->
+      <div class="escala-busca-wrap">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="escalaBuscaPessoa" placeholder="Buscar por nome do membro…" autocomplete="off" />
+        </div>
+        <div id="escalaBuscaResultado" class="escala-busca-resultado" style="display:none;"></div>
+      </div>
+
+      <!-- Sub-abas de ministério -->
+      <div class="soc-tabs" role="tablist" aria-label="Ministérios" style="margin-top:18px;">
+        <button class="soc-tab active" data-min="todos" role="tab" aria-selected="true">Todos</button>
+        <button class="soc-tab" data-min="louvor" role="tab" aria-selected="false">Louvor</button>
+        <button class="soc-tab" data-min="recepcao" role="tab" aria-selected="false">Recepção</button>
+        <button class="soc-tab" data-min="diaconia" role="tab" aria-selected="false">Diaconia</button>
+        <button class="soc-tab" data-min="oracao" role="tab" aria-selected="false">Oração</button>
+        <button class="soc-tab" data-min="midia" role="tab" aria-selected="false">Mídia</button>
+      </div>
+
+      <!-- Navegação de mês -->
+      <div class="cal-header" style="margin-top:18px;">
+        <button class="icon-btn" id="btnEscalaMesAnterior" aria-label="Mês anterior"><i class="fa-solid fa-chevron-left"></i></button>
+        <h3 id="escalaMesAno">—</h3>
+        <button class="icon-btn" id="btnEscalaMesProximo" aria-label="Próximo mês"><i class="fa-solid fa-chevron-right"></i></button>
+        <button class="btn btn-primary admin-only" id="btnNovaEscala" style="margin-left:auto;">
+          <i class="fa-solid fa-plus"></i> Nova entrada
+        </button>
+      </div>
+
+      <!-- Grade de dias com escalas -->
+      <div id="escalaGrade" class="escala-grade"></div>
+
+      <!-- Ações de admin -->
+      <div style="margin-top:24px; display:flex; flex-wrap:wrap; gap:10px;">
+        <button class="btn btn-ghost admin-only" id="btnGerenciarMembros">
+          <i class="fa-solid fa-users"></i> Gerenciar membros
+        </button>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         GERENCIAR MEMBROS (sub-view de admin)
+         ============================================================ -->
+    <section class="view" id="view-membros">
+      <div class="section-head">
+        <button class="btn btn-ghost" id="btnVoltarEscalas" style="margin-bottom:14px;">
+          <i class="fa-solid fa-chevron-left"></i> Voltar às escalas
+        </button>
+        <h2>Membros</h2>
+        <p>Cadastre os membros que participam dos ministérios para poder escalá-los.</p>
+        <button class="btn btn-primary admin-only" id="btnNovoMembro" style="margin-top:14px;">
+          <i class="fa-solid fa-plus"></i> Novo membro
+        </button>
+      </div>
+
+      <div class="hymn-list" id="membrosList"></div>
     </section>
 
     <!-- ============================================================
@@ -2012,6 +2266,89 @@
     </div>
   </div>
 
+  <!-- ============================================================
+       MODAL — NOVA / EDITAR ENTRADA DE ESCALA
+       ============================================================ -->
+  <div class="modal" id="escalaModal" role="dialog" aria-modal="true" aria-labelledby="escalaTitulo">
+    <div class="modal-header">
+      <div>
+        <span class="kicker">Escalas</span>
+        <h2 id="escalaTitulo">Nova entrada</h2>
+      </div>
+      <button class="modal-close" id="btnCloseEscala" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <form id="formEscala">
+        <input type="hidden" id="escalaId" />
+        <div class="form-row">
+          <div class="form-field">
+            <label for="escalaData">Data do culto/evento</label>
+            <input type="date" id="escalaData" required />
+          </div>
+          <div class="form-field">
+            <label for="escalaMinisterio">Ministério</label>
+            <select id="escalaMinisterio" required>
+              <option value="">Selecione…</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="escalaFuncao">Função</label>
+          <select id="escalaFuncao" required>
+            <option value="">Selecione o ministério primeiro</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Membros escalados</label>
+          <div id="escalaMembrosSelect" class="membros-checkboxes"></div>
+        </div>
+        <div class="conflito-alerta" id="escalaConflito"></div>
+        <div class="form-field">
+          <label for="escalaObs">Observação (opcional)</label>
+          <textarea id="escalaObs" rows="2" placeholder="Ex.: Segunda chamada, traz violão…"></textarea>
+        </div>
+        <div class="form-error" id="escalaErro"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn-text danger admin-only" id="btnExcluirEscala" style="margin-right:auto; color:#e0654f; display:none;">Excluir</button>
+          <button type="button" class="btn-text" id="btnCancelarEscala">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL — NOVO / EDITAR MEMBRO
+       ============================================================ -->
+  <div class="modal" id="membroModal" role="dialog" aria-modal="true" aria-labelledby="membroTitulo">
+    <div class="modal-header">
+      <div>
+        <span class="kicker">Membros</span>
+        <h2 id="membroTitulo">Novo membro</h2>
+      </div>
+      <button class="modal-close" id="btnCloseMembro" aria-label="Fechar"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <form id="formMembro">
+        <input type="hidden" id="membroId" />
+        <div class="form-field">
+          <label for="membroNome">Nome completo</label>
+          <input type="text" id="membroNome" placeholder="Ex.: João Silva" required />
+        </div>
+        <div class="form-field">
+          <label>Ministérios em que participa</label>
+          <div id="membroMinisteriosCheck" class="membros-checkboxes"></div>
+        </div>
+        <div class="form-error" id="membroErro"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn-text danger admin-only" id="btnExcluirMembro" style="margin-right:auto; color:#e0654f; display:none;">Remover</button>
+          <button type="button" class="btn-text" id="btnCancelarMembro">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script type="module">
   import * as AppData from './app-data.js';
 
@@ -2068,6 +2405,8 @@
     if (name === 'estudo-biblico') garantirTemasCarregados('estudo');
     if (name === 'culto-oracao') garantirTemasCarregados('oracao');
     if (name === 'pipqtv') garantirPipqTvCarregado();
+    if (name === 'escalas') garantirEscalasCarregadas();
+    if (name === 'membros') garantirMembrosCarregados();
   }
 
   document.querySelectorAll('[data-view]').forEach(el => {
@@ -3148,6 +3487,441 @@
       await carregarPipqTv();
     } catch (err) {
       erro.textContent = err.message || 'Não foi possível salvar. Tente novamente.';
+    }
+  });
+
+  /* ==================================================================
+     ESCALAS — grade mensal por ministério, com detecção de conflito
+     e busca de serviços por pessoa.
+     ================================================================== */
+  let escalaMesAtual = new Date();
+  escalaMesAtual.setDate(1);
+  let escalaFiltroMinisterio = 'todos';
+  let escalasCache = [];
+  let membrosCache = [];
+
+  function dataLocalISO2(date) {
+    return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
+  }
+
+  function nomeMembro(id) {
+    const m = membrosCache.find(x => x.id === id);
+    return m ? m.nome : '(membro removido)';
+  }
+
+  function formatDataDiaMes(iso) {
+    const [ano, mes, dia] = iso.split('-');
+    const d = new Date(Number(ano), Number(mes) - 1, Number(dia));
+    const diaSemana = d.toLocaleDateString('pt-BR', { weekday: 'long' });
+    return { label: dia + ' de ' + MESES[Number(mes) - 1], semana: diaSemana };
+  }
+
+  async function carregarMembrosCache() {
+    membrosCache = await AppData.getMembros();
+  }
+
+  function renderEscalaGrade() {
+    const container = document.getElementById('escalaGrade');
+    const ano = escalaMesAtual.getFullYear();
+    const mes = escalaMesAtual.getMonth();
+    document.getElementById('escalaMesAno').textContent = MESES[mes] + ' de ' + ano;
+
+    const inicioMes = dataLocalISO2(new Date(ano, mes, 1));
+    const fimMes = dataLocalISO2(new Date(ano, mes + 1, 0));
+
+    let doMes = escalasCache.filter(e => e.data >= inicioMes && e.data <= fimMes);
+    if (escalaFiltroMinisterio !== 'todos') {
+      doMes = doMes.filter(e => e.ministerio === escalaFiltroMinisterio);
+    }
+
+    if (!doMes.length) {
+      container.innerHTML = '<div class="escala-empty">Nenhuma escala cadastrada para este mês.</div>';
+      return;
+    }
+
+    // agrupa por data
+    const porData = {};
+    doMes.forEach(e => {
+      if (!porData[e.data]) porData[e.data] = [];
+      porData[e.data].push(e);
+    });
+    const datasOrdenadas = Object.keys(porData).sort();
+
+    container.innerHTML = datasOrdenadas.map(data => {
+      const { label, semana } = formatDataDiaMes(data);
+      const entradas = porData[data];
+      const entradasHtml = entradas.map(e => {
+        const minInfo = AppData.MINISTERIOS[e.ministerio];
+        const membrosHtml = (e.membrosIds || []).map(id => `<span class="membro-chip">${nomeMembro(id)}</span>`).join('') || '<span class="muted" style="font-size:12.5px;">Ninguém escalado ainda</span>';
+        return `
+          <div class="escala-entrada" data-id="${e.id}">
+            <span class="escala-min-badge">${minInfo ? minInfo.label : e.ministerio}</span>
+            <div class="escala-entrada-info">
+              <div class="funcao">${e.funcao}${e.observacao ? ' · ' + e.observacao : ''}</div>
+              <div class="escala-membros-lista">${membrosHtml}</div>
+            </div>
+            <span class="row-actions admin-only">
+              <button class="edit" aria-label="Editar escala"><i class="fa-solid fa-pen"></i></button>
+            </span>
+          </div>
+        `;
+      }).join('');
+      return `
+        <div class="escala-dia">
+          <div class="escala-dia-header">
+            <span class="data-label">${label}</span>
+            <span class="semana-label">${semana}</span>
+          </div>
+          ${entradasHtml}
+        </div>
+      `;
+    }).join('');
+
+    container.querySelectorAll('.escala-entrada .edit').forEach(btn => {
+      btn.addEventListener('click', () => abrirEditarEscala(btn.closest('.escala-entrada').dataset.id));
+    });
+  }
+
+  async function carregarEscalas() {
+    document.getElementById('escalaGrade').innerHTML = '<div class="escala-empty">Carregando…</div>';
+    escalasCache = await AppData.getEscalas();
+    renderEscalaGrade();
+  }
+
+  let escalasCarregadas = false;
+  function garantirEscalasCarregadas() {
+    if (escalasCarregadas) return;
+    escalasCarregadas = true;
+    Promise.all([carregarMembrosCache(), carregarEscalas()]);
+  }
+
+  document.getElementById('btnEscalaMesAnterior').addEventListener('click', () => {
+    escalaMesAtual.setMonth(escalaMesAtual.getMonth() - 1);
+    renderEscalaGrade();
+  });
+  document.getElementById('btnEscalaMesProximo').addEventListener('click', () => {
+    escalaMesAtual.setMonth(escalaMesAtual.getMonth() + 1);
+    renderEscalaGrade();
+  });
+
+  document.querySelectorAll('#view-escalas .soc-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('#view-escalas .soc-tab').forEach(t => {
+        t.classList.toggle('active', t === tab);
+        t.setAttribute('aria-selected', t === tab);
+      });
+      escalaFiltroMinisterio = tab.dataset.min;
+      renderEscalaGrade();
+    });
+  });
+
+  document.getElementById('btnSairAdminEscalas')?.addEventListener('click', () => AppData.logout().then(() => setModoAdmin(null)));
+
+  /* ----- busca por pessoa ----- */
+  const escalaBuscaInput = document.getElementById('escalaBuscaPessoa');
+  const escalaBuscaResultado = document.getElementById('escalaBuscaResultado');
+
+  escalaBuscaInput.addEventListener('input', () => {
+    const termo = escalaBuscaInput.value.trim().toLowerCase();
+    if (!termo) { escalaBuscaResultado.style.display = 'none'; escalaBuscaResultado.innerHTML = ''; return; }
+    const encontrados = membrosCache.filter(m => m.nome.toLowerCase().includes(termo));
+    if (!encontrados.length) {
+      escalaBuscaResultado.innerHTML = '<div class="busca-item">Nenhum membro encontrado.</div>';
+    } else {
+      escalaBuscaResultado.innerHTML = encontrados.map(m => `
+        <div class="busca-item" data-id="${m.id}">
+          <strong>${m.nome}</strong>
+          <span>${(m.ministerios || []).map(s => AppData.MINISTERIOS[s]?.label || s).join(', ') || 'Sem ministério definido'}</span>
+        </div>
+      `).join('');
+    }
+    escalaBuscaResultado.style.display = 'block';
+    escalaBuscaResultado.querySelectorAll('.busca-item[data-id]').forEach(item => {
+      item.addEventListener('click', () => mostrarEscalasDoMembro(item.dataset.id));
+    });
+  });
+
+  async function mostrarEscalasDoMembro(membroId) {
+    const membro = membrosCache.find(m => m.id === membroId);
+    escalaBuscaResultado.style.display = 'none';
+    escalaBuscaInput.value = membro ? membro.nome : '';
+
+    const escalas = await AppData.getEscalasPorMembro(membroId);
+    const hojeIso = dataLocalISO2(new Date());
+    const futuras = escalas.filter(e => e.data >= hojeIso).sort((a, b) => a.data.localeCompare(b.data));
+
+    const container = document.getElementById('escalaGrade');
+    if (!futuras.length) {
+      container.innerHTML = `
+        <div class="pessoa-escala-card">
+          <h4>${membro ? membro.nome : 'Membro'}</h4>
+          <div class="escala-empty" style="padding:10px 0;">Nenhum serviço futuro encontrado para esta pessoa.</div>
+        </div>
+      `;
+      return;
+    }
+    container.innerHTML = `
+      <div class="pessoa-escala-card">
+        <h4>${membro ? membro.nome : 'Membro'} — próximos serviços</h4>
+        ${futuras.map(e => {
+          const { label } = formatDataDiaMes(e.data);
+          const minInfo = AppData.MINISTERIOS[e.ministerio];
+          return `<div class="escala-item-linha">
+            <span class="data-col">${label}</span>
+            <span class="info-col">${minInfo ? minInfo.label : e.ministerio} · ${e.funcao}</span>
+          </div>`;
+        }).join('')}
+      </div>
+    `;
+  }
+
+  /* ----- modal de nova/editar escala ----- */
+  const escalaModal = document.getElementById('escalaModal');
+
+  function popularSelectMinisterio() {
+    const sel = document.getElementById('escalaMinisterio');
+    sel.innerHTML = '<option value="">Selecione…</option>' +
+      AppData.MINISTERIOS_SIGLAS.map(sigla => `<option value="${sigla}">${AppData.MINISTERIOS[sigla].label}</option>`).join('');
+  }
+
+  function popularSelectFuncao(ministerioSigla, funcaoSelecionada) {
+    const sel = document.getElementById('escalaFuncao');
+    const info = AppData.MINISTERIOS[ministerioSigla];
+    if (!info) {
+      sel.innerHTML = '<option value="">Selecione o ministério primeiro</option>';
+      return;
+    }
+    sel.innerHTML = info.funcoes.map(f => `<option value="${f}">${f}</option>`).join('');
+    if (funcaoSelecionada) sel.value = funcaoSelecionada;
+  }
+
+  document.getElementById('escalaMinisterio').addEventListener('change', e => {
+    popularSelectFuncao(e.target.value, null);
+  });
+
+  function popularCheckboxMembros(selecionados) {
+    const wrap = document.getElementById('escalaMembrosSelect');
+    if (!membrosCache.length) {
+      wrap.innerHTML = '<div class="muted" style="font-size:13px;">Nenhum membro cadastrado ainda. Use "Gerenciar membros" para adicionar.</div>';
+      return;
+    }
+    wrap.innerHTML = membrosCache.map(m => `
+      <label>
+        <input type="checkbox" value="${m.id}" ${selecionados?.includes(m.id) ? 'checked' : ''} />
+        ${m.nome}
+      </label>
+    `).join('');
+    wrap.querySelectorAll('input[type=checkbox]').forEach(cb => {
+      cb.addEventListener('change', checarConflitosEscala);
+    });
+  }
+
+  async function checarConflitosEscala() {
+    const alerta = document.getElementById('escalaConflito');
+    const data = document.getElementById('escalaData').value;
+    const escalaIdAtual = document.getElementById('escalaId').value || null;
+    const marcados = Array.from(document.querySelectorAll('#escalaMembrosSelect input:checked')).map(cb => cb.value);
+
+    if (!data || !marcados.length) { alerta.classList.remove('visivel'); alerta.textContent = ''; return; }
+
+    const avisos = [];
+    for (const membroId of marcados) {
+      const conflitos = await AppData.verificarConflitoMembro(membroId, data, escalaIdAtual);
+      if (conflitos.length) {
+        const nome = nomeMembro(membroId);
+        conflitos.forEach(c => {
+          const minInfo = AppData.MINISTERIOS[c.ministerio];
+          avisos.push(`${nome} já está escalado em ${minInfo ? minInfo.label : c.ministerio} (${c.funcao}) nesta mesma data.`);
+        });
+      }
+    }
+    if (avisos.length) {
+      alerta.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> ' + avisos.join('<br>');
+      alerta.classList.add('visivel');
+    } else {
+      alerta.classList.remove('visivel');
+      alerta.textContent = '';
+    }
+  }
+
+  document.getElementById('escalaData').addEventListener('change', checarConflitosEscala);
+
+  function abrirNovaEscala() {
+    document.getElementById('escalaTitulo').textContent = 'Nova entrada';
+    document.getElementById('formEscala').reset();
+    document.getElementById('escalaId').value = '';
+    document.getElementById('escalaConflito').classList.remove('visivel');
+    document.getElementById('escalaErro').textContent = '';
+    document.getElementById('btnExcluirEscala').style.display = 'none';
+    popularSelectMinisterio();
+    popularSelectFuncao(null, null);
+    popularCheckboxMembros([]);
+    openModal(escalaModal);
+  }
+
+  function abrirEditarEscala(id) {
+    const e = escalasCache.find(x => x.id === id);
+    if (!e) return;
+    document.getElementById('escalaTitulo').textContent = 'Editar entrada';
+    document.getElementById('escalaId').value = e.id;
+    document.getElementById('escalaData').value = e.data;
+    document.getElementById('escalaConflito').classList.remove('visivel');
+    document.getElementById('escalaErro').textContent = '';
+    document.getElementById('btnExcluirEscala').style.display = 'inline-flex';
+    popularSelectMinisterio();
+    document.getElementById('escalaMinisterio').value = e.ministerio;
+    popularSelectFuncao(e.ministerio, e.funcao);
+    popularCheckboxMembros(e.membrosIds || []);
+    document.getElementById('escalaObs').value = e.observacao || '';
+    openModal(escalaModal);
+  }
+
+  document.getElementById('btnNovaEscala').addEventListener('click', abrirNovaEscala);
+  document.getElementById('btnCloseEscala').addEventListener('click', closeModal);
+  document.getElementById('btnCancelarEscala').addEventListener('click', closeModal);
+
+  document.getElementById('formEscala').addEventListener('submit', async e => {
+    e.preventDefault();
+    const erro = document.getElementById('escalaErro');
+    erro.textContent = '';
+    const membrosIds = Array.from(document.querySelectorAll('#escalaMembrosSelect input:checked')).map(cb => cb.value);
+    const escala = {
+      id: document.getElementById('escalaId').value || null,
+      data: document.getElementById('escalaData').value,
+      ministerio: document.getElementById('escalaMinisterio').value,
+      funcao: document.getElementById('escalaFuncao').value,
+      membrosIds,
+      observacao: document.getElementById('escalaObs').value.trim(),
+    };
+    try {
+      await AppData.salvarEscala(escala);
+      closeModal();
+      await carregarEscalas();
+    } catch (err) {
+      erro.textContent = err.message || 'Não foi possível salvar. Tente novamente.';
+    }
+  });
+
+  document.getElementById('btnExcluirEscala').addEventListener('click', async () => {
+    const id = document.getElementById('escalaId').value;
+    if (!id) return;
+    if (!confirm('Tem certeza que deseja excluir esta entrada de escala?')) return;
+    try {
+      await AppData.excluirEscala(id);
+      closeModal();
+      await carregarEscalas();
+    } catch (err) {
+      document.getElementById('escalaErro').textContent = err.message || 'Não foi possível excluir.';
+    }
+  });
+
+  /* ==================================================================
+     MEMBROS (gerenciamento, dentro de Escalas)
+     ================================================================== */
+  document.getElementById('btnGerenciarMembros').addEventListener('click', () => goToView('membros'));
+  document.getElementById('btnVoltarEscalas').addEventListener('click', () => goToView('escalas'));
+
+  function renderMembrosList() {
+    const container = document.getElementById('membrosList');
+    if (!membrosCache.length) {
+      container.innerHTML = '<div class="empty-state">Nenhum membro cadastrado ainda.</div>';
+      return;
+    }
+    container.innerHTML = membrosCache.map(m => `
+      <div class="hymn-row" data-id="${m.id}" role="button" tabindex="0">
+        <span class="title" style="flex:1;">
+          <strong>${m.nome}</strong><br>
+          <span class="muted" style="font-size:12px;">${(m.ministerios || []).map(s => AppData.MINISTERIOS[s]?.label || s).join(', ') || 'Sem ministério definido'}</span>
+        </span>
+        <span class="muted admin-only"><i class="fa-solid fa-pen"></i></span>
+      </div>
+    `).join('');
+    container.querySelectorAll('.hymn-row').forEach(row => {
+      const open = () => { if (document.body.classList.contains('is-admin')) abrirEditarMembro(row.dataset.id); };
+      row.addEventListener('click', open);
+      row.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+    });
+  }
+
+  async function carregarMembrosView() {
+    document.getElementById('membrosList').innerHTML = '<div class="empty-state">Carregando…</div>';
+    await carregarMembrosCache();
+    renderMembrosList();
+  }
+
+  let membrosCarregados = false;
+  function garantirMembrosCarregados() {
+    membrosCarregados = false; // sempre recarrega, é uma tela de gestão
+    carregarMembrosView();
+  }
+
+  const membroModal = document.getElementById('membroModal');
+
+  function popularCheckboxMinisteriosMembro(selecionados) {
+    const wrap = document.getElementById('membroMinisteriosCheck');
+    wrap.innerHTML = AppData.MINISTERIOS_SIGLAS.map(sigla => `
+      <label>
+        <input type="checkbox" value="${sigla}" ${selecionados?.includes(sigla) ? 'checked' : ''} />
+        ${AppData.MINISTERIOS[sigla].label}
+      </label>
+    `).join('');
+  }
+
+  function abrirNovoMembro() {
+    document.getElementById('membroTitulo').textContent = 'Novo membro';
+    document.getElementById('formMembro').reset();
+    document.getElementById('membroId').value = '';
+    document.getElementById('membroErro').textContent = '';
+    document.getElementById('btnExcluirMembro').style.display = 'none';
+    popularCheckboxMinisteriosMembro([]);
+    openModal(membroModal);
+  }
+
+  function abrirEditarMembro(id) {
+    const m = membrosCache.find(x => x.id === id);
+    if (!m) return;
+    document.getElementById('membroTitulo').textContent = 'Editar membro';
+    document.getElementById('membroId').value = m.id;
+    document.getElementById('membroNome').value = m.nome;
+    document.getElementById('membroErro').textContent = '';
+    document.getElementById('btnExcluirMembro').style.display = 'inline-flex';
+    popularCheckboxMinisteriosMembro(m.ministerios || []);
+    openModal(membroModal);
+  }
+
+  document.getElementById('btnNovoMembro').addEventListener('click', abrirNovoMembro);
+  document.getElementById('btnCloseMembro').addEventListener('click', closeModal);
+  document.getElementById('btnCancelarMembro').addEventListener('click', closeModal);
+
+  document.getElementById('formMembro').addEventListener('submit', async e => {
+    e.preventDefault();
+    const erro = document.getElementById('membroErro');
+    erro.textContent = '';
+    const ministerios = Array.from(document.querySelectorAll('#membroMinisteriosCheck input:checked')).map(cb => cb.value);
+    const membro = {
+      id: document.getElementById('membroId').value || null,
+      nome: document.getElementById('membroNome').value.trim(),
+      ministerios,
+    };
+    try {
+      await AppData.salvarMembro(membro);
+      closeModal();
+      await carregarMembrosView();
+    } catch (err) {
+      erro.textContent = err.message || 'Não foi possível salvar. Tente novamente.';
+    }
+  });
+
+  document.getElementById('btnExcluirMembro').addEventListener('click', async () => {
+    const id = document.getElementById('membroId').value;
+    if (!id) return;
+    if (!confirm('Remover este membro da lista? (ele deixa de aparecer para novas escalas, mas escalas antigas não são alteradas)')) return;
+    try {
+      await AppData.excluirMembro(id);
+      closeModal();
+      await carregarMembrosView();
+    } catch (err) {
+      document.getElementById('membroErro').textContent = err.message || 'Não foi possível remover.';
     }
   });
 
